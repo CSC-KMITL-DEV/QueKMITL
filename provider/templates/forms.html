@@ -1,0 +1,199 @@
+{% extends "base.html" %} {% load static %} {% block content %} {% if msg %}
+<script>
+  swal("{{msg}}", "บันทึกข้อมูลสำเร็จ", "success");
+</script>
+{%endif%}
+
+<div class="boxform">
+  <h1>สร้างคิว</h1>
+  <hr />
+  <br />
+  <form class="form-inline" action="{% url 'forms' %}" method="POST">
+    {% csrf_token %}
+
+    <!-- input quename  -->
+    <div class="row">
+      <div class="col-sm-9 md-6">
+        <label class="form-label">ชื่อคิว</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nameque"
+          placeholder="ใส่ชื่อคิว เช่น ห้องตรวจ 1"
+          required
+        />
+        {% if sb_name %}
+        <div class="invalid-feedback d-block">{{sb_name}}</div>
+        {%endif%}
+      </div>
+
+      <div class="col-sm-3 md-3">
+        <label class="form-label">Prefix</label>
+        <input
+          type="text"
+          class="form-control"
+          name="prefix"
+          placeholder="ใส่ตัวอักษร เช่น A"
+          required
+        />
+
+        <!-- เช็ค prefix อักษรพิเศษ -->
+        {% if sb_prefix %}
+        <div class="invalid-feedback d-block">{{sb_prefix}}</div>
+        {%endif%}
+
+        <!-- เช็คตัวอักษรเดียว -->
+        {% if checkp %}
+        <div class="invalid-feedback d-block">{{checkp}}</div>
+        {%endif%}
+
+        <!-- เช็ค prefix ซ้ำ -->
+        {% if pf %}
+        <div class="invalid-feedback d-block">{{pf}}</div>
+        {%endif%}
+
+        <!-- เช็ค prefix ที่เป็นเลข -->
+        {% if pfnum %}
+        <div class="invalid-feedback d-block">{{pfnum}}</div>
+        {%endif%}
+      </div>
+    </div>
+
+    <!-- input date -->
+    <br />
+    <div class="row">
+      <div class="col-sm-6 md-3">
+        <label class="form-label">วันที่เริ่มต้น</label>
+        <input type="date" class="form-control" name="datestart" required />
+      </div>
+      <div class="col-sm-6 md-3">
+        <label class="form-label">วันที่สิ้นสุด</label>
+        <input type="date" class="form-control" name="dateend" required />
+      </div>
+      {% if checkd %}
+      <div class="invalid-feedback d-block">{{checkd}}</div>
+      {%endif%}
+    </div>
+
+    <!-- input time -->
+    <br />
+    <div class="row">
+      <div class="col-sm-6 md-3">
+        <label class="form-label">เวลาเริ่มต้น</label>
+        <input type="time" class="form-control" name="timestart" required />
+      </div>
+      <div class="col-sm-6 md-3">
+        <label class="form-label">เวลาที่สิ้นสุด</label>
+        <input type="time" class="form-control" name="timeeend" required />
+        {% if checkt %}
+        <div class="invalid-feedback d-block">{{checkt}}</div>
+        {%endif%}
+      </div>
+    </div>
+
+    <!-- input day open  -->
+    <br />
+    <div class="row">
+      <div class="col-sm-7 md-3">
+        <label class="form-label">วันที่เปิดใช้งาน</label>
+        {% if openday %}
+        <div class="invalid-feedback d-block">{{openday}}</div>
+        {%endif%}
+
+        <div class="flex-container">
+          {% for day in list_day %}
+         
+          <input
+            type="checkbox"
+            id="check-day-{{day.id}}"
+            name="daySelector"
+            value="{{day.id}}"
+          />
+          <label for="check-day-{{day.id}}">{{day.name_day}}</label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- input wait que  -->
+
+      <div class="col-sm-5 md-3">
+        <label class="form-label">ระยะเวลารอคิว</label>
+        <input
+          type="number"
+          max="60"
+          min="0"
+          class="form-control"
+          name="waittime"
+          placeholder="ใส่ระยะเวลา เช่น 50"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- input type que  -->
+    <br />
+
+    <div class="row">
+      <div class="col-sm-2 md-3">
+        <label class="form-label">ประเภทการรับจองคิว</label>
+        {% if typeque %}
+        <div class="invalid-feedback d-block">{{typeque}}</div>
+        {%endif%}
+      </div>
+      <div class="col-sm-5 md-3">
+        <div class="form-check">
+          <div class="boxspace">
+            {% for que in list_que %}
+            <input
+              type="checkbox"
+              id="check-que-{{que.id}}"
+              name="typeque"
+              value="{{que.id}}"
+            />
+            <label for="check-que-{{que.id}}">{{que.name_type_que}}</label>
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- input type user  -->
+    <br />
+    <div class="row">
+      <div class="col-sm-2 md-3">
+        <label class="form-label">ประเภทบุคคลรับบริการ</label>
+        {% if typeuser %}
+        <div class="invalid-feedback d-block">{{typeuser}}</div>
+        {%endif%}
+      </div>
+      <div class="col-sm-7 md-3">
+        <div class="form-check">
+          <div class="boxspace">
+            {%for user in list_user%}
+            <input
+              type="checkbox"
+              id="check-user-{{user.id}}"
+              name="typeuser"
+              value="{{user.id}}"
+            />
+            <label for="check-user-{{user.id}}">{{user.name_type_user}}</label>
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- input submit  -->
+
+    <br />
+    <div class="row">
+      <div class="boxspace">
+        <button type="submit" class="btn btn-success col-sm-2">บันทึก</button>
+        <button class="btn btn-danger col-sm-2" type="reset" value="Reset">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<br /><br />
+{% endblock %}

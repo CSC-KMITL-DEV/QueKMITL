@@ -1,0 +1,280 @@
+body{
+    
+    font-family: 'Prompt', sans-serif;
+    background-color: #2d3436;
+    /* padding: 5%; */
+
+}
+
+
+h1 {text-align: center;
+    font-size: 54px;
+    color: #3bced8;
+}
+
+.boxform {
+    padding: 5%;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.boxspace {
+
+    align-content: center;
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+input[type="text"] {
+ 
+  border-color: #3bced8;
+
+}
+
+input[type="time"] {
+ 
+  border-color: #3bced8;
+
+}
+
+input[type="number"] {
+ 
+  border-color: #3bced8;
+
+}
+ 
+input[type="date"] {
+ 
+    border-color: #3bced8;
+  
+  
+}
+
+
+.flex-container {
+    width: 100%;
+    min-height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  i {
+    display: inline;
+    vertical-align: middle;
+  }
+  
+
+    /* Radio Button */
+input[type="checkbox"] {
+    position: relativ;
+    display: none;
+  }
+  
+  input[type="checkbox"] + label {
+    min-width: 45px;
+    height: 40px;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 25px;
+    position: relative;
+  }
+  
+
+  
+  /*hover, checked, focus*/
+  
+
+  input[type="checkbox"]#check-day-1 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  /*hover, checked, focus*/
+  
+  input[type="checkbox"]#check-day-1:hover + label,
+  input[type="checkbox"]#check-day-1:checked + label,
+  input[type="checkbox"]#check-day-1:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+
+  input[type="checkbox"]#check-day-2 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-day-2:hover + label,
+  input[type="checkbox"]#check-day-2:checked + label,
+  input[type="checkbox"]#check-day-2:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+
+
+  input[type="checkbox"]#check-day-3 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-day-3:hover + label,
+  input[type="checkbox"]#check-day-3:checked + label,
+  input[type="checkbox"]#check-day-3:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+  input[type="checkbox"]#check-day-4 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-day-4:hover + label,
+  input[type="checkbox"]#check-day-4:checked + label,
+  input[type="checkbox"]#check-day-4:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+  input[type="checkbox"]#check-day-5 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-day-5:hover + label,
+  input[type="checkbox"]#check-day-5:checked + label,
+  input[type="checkbox"]#check-day-5:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+  input[type="checkbox"]#check-day-6 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-day-6:hover + label,
+  input[type="checkbox"]#check-day-6:checked + label,
+  input[type="checkbox"]#check-day-6:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+  input[type="checkbox"]#check-day-7 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-day-7:hover + label,
+  input[type="checkbox"]#check-day-7:checked + label,
+  input[type="checkbox"]#check-day-7:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+
+  input[type="checkbox"]#check-user-1 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-user-1:hover + label,
+  input[type="checkbox"]#check-user-1:checked + label,
+  input[type="checkbox"]#check-user-1:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+  input[type="checkbox"]#check-user-2 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-user-2:hover + label,
+  input[type="checkbox"]#check-user-2:checked + label,
+  input[type="checkbox"]#check-user-2:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+  input[type="checkbox"]#check-user-3 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-user-3:hover + label,
+  input[type="checkbox"]#check-user-3:checked + label,
+  input[type="checkbox"]#check-user-3:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  }
+
+
+  input[type="checkbox"]#check-que-1 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-que-1:hover + label,
+  input[type="checkbox"]#check-que-1:checked + label,
+  input[type="checkbox"]#check-que-1:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF
+  }
+
+
+  input[type="checkbox"]#check-que-2 + label {
+    background-color: #E8EAF680;
+    color: #2d3436;
+  
+  }
+  
+  input[type="checkbox"]#check-que-2:hover + label,
+  input[type="checkbox"]#check-que-2:checked + label,
+  input[type="checkbox"]#check-que-2:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF
+  }
+ /*  input[type="checkbox"]#guest + label {
+    background-color: #E8EAF680;
+    color: #3bced8;
+  
+  }
+
+  input[type="checkbox"]#guest:hover + label,
+  input[type="checkbox"]#guest:checked + label,
+  input[type="checkbox"]#guest:focus + label{
+    cursor: pointer;
+    background-color: #3bced8;
+    color: #FFFFFF;
+  } */
+
+

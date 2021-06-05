@@ -86,15 +86,19 @@ def forms(request):
         if request.POST.get('prefix') :
             prefix_upper = request.POST.get('prefix').upper()
             prefix_filter = QueInfo.objects.filter(prefix=prefix_upper)
-            if len(prefix_filter) > 0 and (prefix_filter.status == 1):
-                pf = 'ตัวอักษรนี้มีการใช้งานแล้ว !'
-                context = {
-                'pf' : pf,
-            'list_user': list_user,
-            'list_day' : list_day,
-            'list_que' : list_que,
-                }
-                return render(request, template_name='forms.html', context=context)
+            for p in prefix_filter:
+                if p.status == True:
+                    pf = 'ตัวอักษรนี้มีการใช้งานแล้ว !'
+
+                    context = {
+                    'pf' : pf,
+                    'list_user': list_user,
+                    'list_day' : list_day,
+                    'list_que' : list_que,
+                    }
+                    return render(request, template_name='forms.html', context=context)
+                else:
+                    pass
             else:
                 pass
 
@@ -172,8 +176,20 @@ def forms(request):
 def view_que(request):
     context = {}
     que_list = QueInfo.objects.filter(status=1)
+    que_list = que_list.order_by('date_start')
 
     context = {
         'que_list' : que_list,
         }
     return render(request, template_name='view_que.html', context=context)
+
+
+def info_que(request, id):
+    context = {}
+    info = QueInfo.objects.get(pk=id)
+
+    context = {
+        'info' : info,
+        }
+    return render(request, template_name='que_info.html', context=context)
+

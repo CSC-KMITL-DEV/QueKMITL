@@ -1,31 +1,36 @@
 {% extends "base.html" %} {% load static %} {% block content %}
 
-
-<br>
+<br />
 <h1>คิว</h1>
-<hr/>
-<br>
+<hr />
+<br />
+<div class="col-sm-12">
+  <div class="row">
+    {% for que in que_list %}
+    <div class="col-sm-6 md-3">
+      <div class="list-group">
+        <a id="boxque" class="list-group-item list-group-item-action" href="{% url 'info_que' id=que.id %}">
+          <div class="row">
+            <div class="col-sm-7 md-3">
+              <p>ชื่อคิว :</p>
+              <h4 class="mb-1"><b>{{que.name_que}}</b></h4>
+            </div>
+            <div class="col-sm-5 md-3">
+              <p class="mb-1">Prefix : <b>{{que.prefix}}</b></p>
+              <p class="mb-1">ตั้งแต่วันที่ : <b>{{que.date_start}}</b></p>
+              <p class="mb-1">สิ้นสุดวันที่ : <b>{{que.date_end}}</b></p>
+              <p class="mb-1">
+                เวลา : <b>{{que.time_start}}</b> ถึง <b>{{que.time_end}}</b>
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
 
+    <br />
 
-
-{% for que in que_list %}
-
-    <div class="list-group">
-<a id="boxque" class="list-group-item list-group-item-action" href="">
-
-        <h3 class="mb-1">ชื่อคิว : <b>{{que.name_que}}</b></h3>
-        <h5 class="mb-1">Prefix : <b>{{que.prefix}}</b></h5>
-        <h5 class="mb-1">ตั้งแต่วันที่ : <b>{{que.date_start}}</b></h5>
-        <h5 class="mb-1">สิ้นสุดวันที่ : <b>{{que.date_end}}</b></h5>
-        <h5 class="mb-1">เวลา : <b>{{que.time_start}}</b></h5>
-        <h5 class="mb-1">ถึง : <b>{{que.time_end}}</b></h5>
-
-        
-</a></div>
-
-
-
-<br>
-{%endfor%}
-
+    {%endfor%}
+  </div>
+</div>
 {% endblock %}

@@ -35,15 +35,7 @@ class QueInfo(models.Model):
     wait_time = models.IntegerField()
     type_que = models.ManyToManyField(TypeQue)
     type_user = models.ManyToManyField(TypeUser)
-
-    UNFINISHED = '1'
-    DONE = '2'
-    STATUS = (
-        (UNFINISHED, 'unfinished'),
-        (DONE, 'done'),
-    )
-
-    status = models.CharField(max_length=2, choices=STATUS, default='1')
+    status = models.BooleanField(default=True)
     class Meta:
         managed = True
         db_table = "queinfo"

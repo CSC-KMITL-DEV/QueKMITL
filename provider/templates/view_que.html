@@ -7,12 +7,14 @@
 <div class="col-sm-12">
   <div class="row">
     {% for que in que_list %}
+     
     <div class="col-sm-6 md-3">
       <div class="list-group">
         <a id="boxque" class="list-group-item list-group-item-action" href="{% url 'info_que' id=que.id %}">
           <div class="row">
             <div class="col-sm-7 md-3">
-              <p>ชื่อคิว :</p>
+            
+              <p id="number">{{forloop.counter}}</p>
               <h4 class="mb-1"><b>{{que.name_que}}</b></h4>
             </div>
             <div class="col-sm-5 md-3">
@@ -29,7 +31,7 @@
     </div>
 
     <br />
-
+   
     {%endfor%}
   </div>
 </div>

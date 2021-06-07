@@ -6,12 +6,26 @@
     border-color: #6495ED;
     border-style: solid;
     margin: 10px;
+    
 }
 
 h4 {
     text-align: center;
     font-size: 30px;
-    color: brown;
-    margin-top: 30px;
+    color: #3bced8;
+    margin-top: 5px;
 }
 
+
+#number {
+    content: counter(steps);
+    margin-right: 0.5rem;
+    background: #FFD700;
+    color: white;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    line-height: 1.2em;
+}

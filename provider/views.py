@@ -176,10 +176,11 @@ def forms(request):
 def view_que(request):
     context = {}
     que_list = QueInfo.objects.filter(status=1)
-    que_list = que_list.order_by('date_start')
 
+    que_list = que_list.order_by('date_start')
     context = {
         'que_list' : que_list,
+    
         }
     return render(request, template_name='view_que.html', context=context)
 

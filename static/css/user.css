@@ -1,0 +1,27 @@
+.footer {
+
+    text-align: center;
+    bottom: 0;
+    color: white;
+    background: #404040;
+    height: 15%;
+    left: 0;
+    position: relative; 
+    width:100%;
+    flex: 0 0 50px;
+    margin-top: auto;
+    }
+
+
+body{
+    
+    font-family: 'Prompt', sans-serif;
+    background-color: #DCDCDC;
+    /* background-color: #2d3436; */
+    
+
+}
+
+.nav-item {
+    padding: 30px;
+}

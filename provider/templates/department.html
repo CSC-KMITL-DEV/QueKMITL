@@ -1,0 +1,61 @@
+{% extends "provider_base.html" %} {% load static %} {% block content %}
+
+<br />
+<a
+  class="btn btn-info col-sm-2 btn-lg"
+  style="color: white; position: relative; float: right; margin-left: -50%"
+  href="{% url 'forms' %}"
+>
+  เพิ่ม
+</a>
+<h1>แผนก</h1>
+<hr />
+<br />
+
+<div class="col-sm-3 md-3">
+  <div class="list-group">
+    <a id="boxque" class="list-group-item list-group-item-action" href="">
+      <h4 class="mb-1"><b>แผนกรับยา</b></h4>
+
+      <center>
+        <div class="switcher">
+          <input
+            type="radio"
+            name="balance"
+            value="on_status"
+            id="on_status"
+            class="switcher__input switcher__input--on_status"
+            checked=""
+          />
+          <label for="on_status" class="switcher__label" onclick="changeStatus(1)"
+            ><b>เปิด</b></label
+          >
+
+          <input
+            type="radio"
+            name="balance"
+            value="off_status"
+            id="off_status"
+            class="switcher__input switcher__input--off_status"
+          />
+          <label
+            for="off_status"
+            class="switcher__label"
+            onclick="changeStatus(2)"
+            ><b>ปิด</b></label
+          >
+
+          <span class="switcher__toggle"></span>
+        </div>
+      </center>
+    </a>
+  </div>
+</div>
+
+<script>
+  function changeStatus(s) {
+    status_open = s;
+  }
+</script>
+
+{% endblock %}

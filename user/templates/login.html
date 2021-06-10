@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+{% load static %}{% load socialaccount %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>QueKmitl</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    />
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+    <!-- CSS  -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/index.css'%}?"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- sweetalert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">
+          <img src="{% static "img/logo.png" %}" width="60px" height="auto"
+          class="d-inline-block align-top" alt="logo"> KMITL QUE
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'index' %}"
+                ><b>หน้าหลัก</b></a
+              >
+            </li>
+          </ul>
+
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <div class="d-grid gap-2">
+              {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle btn-light my-2 my-sm-0 btn-lg btn-block" href="" style="color: orangered; background-color: white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user.first_name }} {{ user.last_name }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">{{ user.email }}</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-left"></i>
+                Logout</a></li>
+              </li>
+            </ul>
+             
+
+              {% else%}
+              <a
+                class="btn btn-light my-2 my-sm-0 btn-lg btn-block"
+                style="color: orangered; background-color: white"
+                href="{% url 'login' %}"
+              >
+                <i class="bi bi-person-circle"></i> Login
+              </a>
+
+              {% endif%}
+            </div>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <br /><br />
+
+    <div class="container">
+    {% if user.is_authenticated %}
+        <h1>Welcome, {{ user.first_name }} {{ user.last_name }} !</h1>    
+        
+        
+    {% else %}
+        <h1>ลงชื่อเข้าสู่ระบบ</h1>
+        <br>
+        
+        <center>
+        <div id="loginform" class="col-sm-5">
+
+
+      <!-- Login for provider -->
+       
+       <h4>เจ้าหน้าที่ให้บริการ</h4><br>
+      <form  class="form-info" method="POST" action="{% url 'check_login' %}">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="Username" class="form-label float-start">Username</label>
+          <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label float-start">Password</label>
+          <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+        </div>
+       {% if error %}
+            	<p style="text-align: center; color: red;"><b>{{ error }}</b><p>
+            	{% endif %}
+
+
+        <div class="d-grid gap-2">
+        <button type="submit" class="btn my-2 my-sm-0 btn-lg btn-block" style="background-color: orangered;color: white;">เข้าสู่ระบบ</button>
+      </form>
+     
+      <!-- end -->
+
+       
+        <a class="btn btn-light my-2 my-sm-0 btn-lg btn-block" href="{% provider_login_url 'google' %}" style="border-style: solid;border-color: black;">
+          <img src="{% static "icon/google.png" %}" width="30px" height="auto"/>
+          Login With Google</a>
+
+          <br>
+          <div id="emailHelp" class="form-text">*** นักศึกษา บุคลากร และบุคคลทั่วไปกรุณาลงชื่อเข้าใช้โดย Gmail ***</div>
+
+        </div>
+      </div>
+    </center>
+    {% endif %}
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <br />
+    <div class="row">
+      <div class="col">
+        <span>
+          <p>
+            QUE | KMITL <br />
+            ระบบจองคิวภายในสถาบันพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
+          </p></span
+        >
+      </div>
+      <div class="col">
+        <span>
+          <p>
+            Contact <br />
+            Phone : 081-111-111 <br />
+            <a href="" style="color: white">Facebook</a>
+          </p></span
+        >
+      </div>
+      <div class="col">
+        <span>
+          <p>
+            Links <br />
+            <a href="https://www.kmitl.ac.th/en" style="color: white"
+              >KMITL</a
+            >
+            <br />
+            <a href="https://kmchf-pp.org/" style="color: white"
+              >KMITL Hospital</a
+            >
+          </p></span
+        >
+      </div>
+  </div>
+</div>
+</footer>
+
+    
+  </body>
+</html>

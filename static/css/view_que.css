@@ -9,6 +9,16 @@
     
 }
 
+nav{
+    /* background:white; */
+    color:orangered;
+    text-align: center;
+    display: inline-block;
+    float: none;
+    width: 100%;
+    
+  }
+
 h4 {
     text-align: center;
     font-size: 30px;
@@ -29,3 +39,29 @@ h4 {
     place-items: center;
     line-height: 1.2em;
 }
+
+
+#dayopen  {
+    position: relativ;
+    width: 40px;
+    min-width: 45px;
+    height: 40px;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 25px;
+    position: relative;
+    background-color: white;
+    color: #2d3436;
+  
+  }
+
+  a{
+    text-decoration: none;
+   }
+ 
+ .nav-item {
+     padding: 20px;
+ }
+
+
+

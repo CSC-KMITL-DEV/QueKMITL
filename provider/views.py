@@ -3,8 +3,15 @@ from django.shortcuts import redirect, render
 from django.template.context_processors import request
 from .models import QueInfo, TypeUser, Week_Day, TypeQue
 from string import punctuation
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
+# Create your views here.
+@login_required
+def department(request):
+    context = {}
+    return render(request, template_name='department.html')
+
+@login_required
 def forms(request):
     
     context = {}
@@ -173,6 +180,7 @@ def forms(request):
             }
     return render(request, template_name='forms.html', context=context)
 
+@login_required
 def view_que(request):
     context = {}
     que_list = QueInfo.objects.filter(status=1)
@@ -184,13 +192,26 @@ def view_que(request):
         }
     return render(request, template_name='view_que.html', context=context)
 
-
+@login_required
 def info_que(request, id):
     context = {}
     info = QueInfo.objects.get(pk=id)
 
+    day = info.day_open.all()
+    typeque = info.type_que.all()
+    typeuser = info.type_user.all()
     context = {
         'info' : info,
+        'day' : day,
+        'typeque' : typeque,
+        'typeuser' : typeuser,        
         }
     return render(request, template_name='que_info.html', context=context)
 
+@login_required
+def close_que(request, id):
+    context = {}
+    que = QueInfo.objects.get(pk=id)
+    que.status = 0
+    que.save()
+    return redirect(to="view_que")

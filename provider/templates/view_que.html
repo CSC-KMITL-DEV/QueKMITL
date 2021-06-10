@@ -1,10 +1,18 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "provider_base.html" %} {% load static %} {% block content %}
+
 
 <br />
 <h1>คิว</h1>
 <hr />
 <br />
 <div class="col-sm-12">
+  
+  
+  <a class="btn btn-info col-sm-2 btn-lg" 
+  style="color:white;position: relative;float: right;margin-left: -50%;" href="{% url 'forms' %}"> สร้างคิว
+  </a>
+
+  <br><br>
   <div class="row">
     {% for que in que_list %}
      

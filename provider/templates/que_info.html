@@ -1,9 +1,208 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "provider_base.html" %} {% load static %} {% block content %}
 
 <br />
-<h1>รายละเอียดคิว : {{info.name_que}} ({{info.prefix}})</h1>
+<h1>จัดลำดับคิว : {{info.name_que}} ({{info.prefix}})</h1>
 <hr />
 <br />
+<div class="row">
+  <div class="col-sm-5 md-3">
+    <center>
+      <div class="col-sm-9 md-3">
+          
+        <table
+          class="table table-light table-borderless "
+          style=" font-size: 20px ;border:solid;border-radius: 20px;"
+        >
+          <thead>
+            <tr>
+              <th></th>
+              <th>รายละเอียด</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>วันที่เปิด</b></td>
+              <td>
+                {%for d in day%}
+                <b>{{d.name_day}} </b>
+                {% endfor %}
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>เปิดตั้งแต่วัน</b></td>
+              <td>
+                {{info.date_start}}
+                <b>ถึง </b>
+                {{info.date_end}}
+              </td>
+            </tr>
+            <tr>
+              <td><b>เวลา</b></td>
+              <td>
+                {{info.time_start}}
+                <b>ถึง </b>
+                {{info.time_end}}
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>ระยะเวลารอคิว</b></td>
+              <td><b>{{info.wait_time}} </b>นาที</td>
+            </tr>
+
+            <tr>
+              <td><b>รูปแบบบริการ</b></td>
+
+              <td>
+                {%for q in typeque%}
+                <b>{{q.name_type_que}} </b>
+                {% endfor %}
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>ผู้รับบริการ</b></td>
+
+              <td>
+                {%for u in typeuser%}
+                <b>{{u.name_type_user}} </b>
+                {% endfor %}
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>จัดการคิว</b></td>
+
+              <td>
+                <div class="d-grid gap-2">
+                  <a class="btn btn-outline-primary btn-lg btn-block" href="">
+                    เพิ่มผู้เข้าคิวใหม่</a
+                  >
+                  <a class="btn btn-outline-warning btn-lg btn-block" href="">
+                    รายละเอียดผู้เข้าคิว</a
+                  >
+                  <a
+                    class="btn btn-outline-danger btn-lg btn-block"
+                    href="{% url 'close_que' info.id %}"
+                    >ปิดบริการ</a
+                  >
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </center>
+  </div>
+
+  <br />
+  <br />
+  <br />
+
+  <div class="col-sm-7 md-3 ">
+    
+      <div class="list-group">
+        <div id="boxque" class="list-group-item list-group-item-action" href="">
+            
+
+            <div class="row">
+            <h1 style="color: blue">B0001</h1>
+            <h2 style="color: red; text-align: end; padding-right: 50px">
+              <b>ถึงคิวแล้ว</b>
+            </h2>
+
+            <div class="col-sm">
+              <h2>คุณ lululululu ปปปปปปปปปปปป</h2>
+              <h2>เบอร์ติดต่อ : 081-1111-1111</h2>
+            </div>
+          </div>
+
+          <center>
+            <div class="d-grid gap-2 d-md-block">
+              <button
+                type="button"
+                class="btn btn-success col-sm-3 btn-lg btn-block"
+              >
+                เข้ารับบริการ
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning col-sm-2 btn-lg btn-block"
+              >
+                เลื่อนคิว
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger col-sm-2 btn-lg btn-block"
+              >
+                ยกเลิกคิว
+              </button>
+              <button
+                type="button"
+                class="btn btn-dark col-sm-2 btn-lg btn-block"
+              >
+                ลบคิว
+              </button>
+            </div>
+          </center>
+        </div>
 
 
+
+
+        <div id="boxque" class="list-group-item list-group-item-action" href="">
+            
+
+            <div class="row">
+            <h1 style="color: blue">B0002</h1>
+            <h2 style="color: black; text-align: end; padding-right: 50px">
+              <b>รอ 10 นาที</b>
+            </h2>
+
+            <div class="col-sm">
+              <h2>คุณ lululululu ปปปปปปปปปปปป</h2>
+              <h2>เบอร์ติดต่อ : 081-1111-1111</h2>
+            </div>
+          </div>
+
+          <center>
+            <div class="d-grid gap-2 d-md-block">
+              <button
+                type="button"
+                class="btn btn-success col-sm-3 btn-lg btn-block"
+              >
+                เข้ารับบริการ
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning col-sm-2 btn-lg btn-block"
+              >
+                เลื่อนคิว
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger col-sm-2 btn-lg btn-block"
+              >
+                ยกเลิกคิว
+              </button>
+              <button
+                type="button"
+                class="btn btn-dark col-sm-2 btn-lg btn-block"
+              >
+                ลบคิว
+              </button>
+            </div>
+          </center>
+        </div>
+
+
+
+
+
+     
+    </div>
+  </div>
+</div>
+</div>
 {% endblock %}

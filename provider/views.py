@@ -1,19 +1,100 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.context_processors import request
-from .models import QueInfo, TypeUser, Week_Day, TypeQue
+from .models import Department, QueInfo, TypeUser, Week_Day, TypeQue, Type_in_Dep
 from string import punctuation
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @login_required
 def department(request):
+    dep_all = Department.objects.all()
+    context = {
+        'dep_all' : dep_all
+    }
+    return render(request, template_name='department.html', context=context)
+
+# Create your views here.
+@login_required
+def create_dep(request):
     context = {}
-    return render(request, template_name='department.html')
+    symbols = set(punctuation)
+
+    msg = ''
+    if request.method == 'POST':
+        if any(c in symbols for c in request.POST.get('name_dep')):
+            error = 'ต้องไม่มีตัวอักษรพิเศษในชื่อคิว !'
+            context = {
+            'error' : error,
+            }
+            return render(request, template_name='dep_form.html', context=context)
+        else:
+            dep = Department.objects.create(
+            name_dep = request.POST.get('name_dep'),)
+            dep.save()
+            msg = 'Successfully'
+
+            context = {
+                'msg' : msg,
+                }
+            return render(request, template_name='dep_form.html', context=context)
+
+    return render(request, template_name='dep_form.html')
+
 
 @login_required
-def forms(request):
-    
+def type_in_dep(request, id):
+    dep = Department.objects.get(pk=id)
+    t_in_dep = Type_in_Dep.objects.filter(dep_id=dep.id)
+    context = {
+        't_in_dep' : t_in_dep,
+        'dep' : dep,
+    }
+    return render(request, template_name='type_in_dep.html', context=context)
+
+
+@login_required
+def create_type_in_dep(request, id):
+    dep = Department.objects.get(pk=id)
+    context = {}
+    symbols = set(punctuation)
+
+    msg = ''
+    if request.method == 'POST':
+            t_dep = Type_in_Dep.objects.create(
+            name_que_dep = request.POST.get('nametype_dep'),
+            dep_id = dep)
+            t_dep.save()
+            msg = 'Successfully'
+            context = {
+                'msg' : msg,
+                'dep' : dep,
+                }
+            return render(request, template_name='type_in_dep_form.html', context=context)
+
+    context = {
+        
+        'dep' : dep,
+    }
+    return render(request, template_name='type_in_dep_form.html', context=context)
+
+
+@login_required
+def view_que(request, id):
+    tdep = Type_in_Dep.objects.get(pk=id)
+
+    context = {}
+    que_list = QueInfo.objects.filter(status=1, type_in_dep_id=tdep)
+    que_list = que_list.order_by('date_start')
+    context = {
+        'que_list' : que_list,
+        'tdep' : tdep,
+        }
+    return render(request, template_name='view_que.html', context=context)
+
+@login_required
+def forms(request, id):
+    dep_t = Type_in_Dep.objects.get(pk=id)
     context = {}
     msg = ''
     symbols = set(punctuation)
@@ -31,6 +112,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -41,6 +123,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -51,6 +134,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -63,6 +147,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -75,6 +160,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -86,6 +172,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -102,6 +189,7 @@ def forms(request):
                     'list_user': list_user,
                     'list_day' : list_day,
                     'list_que' : list_que,
+                    'dep_t' : dep_t,
                     }
                     return render(request, template_name='forms.html', context=context)
                 else:
@@ -116,6 +204,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -126,6 +215,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -136,6 +226,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
             return render(request, template_name='forms.html', context=context)
 
@@ -149,7 +240,8 @@ def forms(request):
         date_end = request.POST.get('dateend'),
         time_start = (request.POST.get('timestart')),
         time_end = (request.POST.get('timeeend')),
-        wait_time = request.POST.get('waittime'),)
+        wait_time = request.POST.get('waittime'),
+        type_in_dep_id = dep_t)
 
         for d in request.POST.getlist('daySelector'):
             que_info.day_open.add(d)
@@ -167,6 +259,7 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
         }
         return render(request, template_name='forms.html', context=context)
 
@@ -177,20 +270,11 @@ def forms(request):
             'list_user': list_user,
             'list_day' : list_day,
             'list_que' : list_que,
+            'dep_t' : dep_t,
             }
     return render(request, template_name='forms.html', context=context)
 
-@login_required
-def view_que(request):
-    context = {}
-    que_list = QueInfo.objects.filter(status=1)
 
-    que_list = que_list.order_by('date_start')
-    context = {
-        'que_list' : que_list,
-    
-        }
-    return render(request, template_name='view_que.html', context=context)
 
 @login_required
 def info_que(request, id):

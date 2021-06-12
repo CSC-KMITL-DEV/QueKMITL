@@ -8,7 +8,7 @@
   <h1>สร้างคิว</h1>
   <hr />
   <br />
-  <form class="form-inline" action="{% url 'forms' %}" method="POST">
+  <form class="form-inline" action="{% url 'forms' id=dep_t.id %}" method="POST">
     {% csrf_token %}
 
     <!-- input quename  -->

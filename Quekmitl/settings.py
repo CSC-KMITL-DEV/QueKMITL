@@ -42,13 +42,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'provider',
     'user',
+    'booking',
     'allauth', # New
     'allauth.account', # New
     'allauth.socialaccount', # New 
     'allauth.socialaccount.providers.google', # New
 
 ]
-SITE_ID = 3
+SITE_ID = 4
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -1,0 +1,45 @@
+{% extends "provider_base.html" %} {% load static %} {% block content %}
+
+{% if msg %}
+<script>
+  swal("{{msg}}", "บันทึกข้อมูลสำเร็จ", "success");
+</script> 
+{%endif%}
+
+<div class="boxform">
+  <h1>สร้างประเภทแผนก</h1>
+  <hr />
+  <br />
+  <form class="form-inline" action="{% url 'create_type_in_dep' id=dep.id%}" method="POST">
+    {% csrf_token %}
+
+    <!-- input quename  -->
+   <center>
+      <div class="col-sm-8 md-6">
+        <label class="form-label">ชื่อแผนก</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nametype_dep"
+          placeholder="ใส่ชื่อประเภท เช่น พญ.จริงใจ สุดใส"
+          required
+        />
+      
+      </div></center>
+
+   
+
+    <!-- input submit  -->
+    <br />
+    <div class="row">
+      <div class="boxspace">
+        <button type="submit" class="btn btn-primary col-sm-2">บันทึก</button>
+        <button class="btn btn-warning col-sm-2" type="reset" value="Reset">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<br /><br />
+{% endblock %}

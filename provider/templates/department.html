@@ -1,10 +1,13 @@
 {% extends "provider_base.html" %} {% load static %} {% block content %}
 
 <br />
+
+<div class="col-sm-12">
+
 <a
   class="btn btn-info col-sm-2 btn-lg"
   style="color: white; position: relative; float: right; margin-left: -50%"
-  href="{% url 'forms' %}"
+  href="{% url 'create_dep' %}"
 >
   เพิ่ม
 </a>
@@ -12,13 +15,18 @@
 <hr />
 <br />
 
+<div class="row">
+ {% for d in dep_all %}
+
 <div class="col-sm-3 md-3">
   <div class="list-group">
-    <a id="boxque" class="list-group-item list-group-item-action" href="">
-      <h4 class="mb-1"><b>แผนกรับยา</b></h4>
+
+   
+    <div id="boxque" class="list-group-item list-group-item-action">
+      <h4 class="mb-1"><b>{{d.name_dep}}</b></h4>
 
       <center>
-        <div class="switcher">
+        <!-- <div class="switcher">
           <input
             type="radio"
             name="balance"
@@ -46,12 +54,19 @@
           >
 
           <span class="switcher__toggle"></span>
-        </div>
+        </div> -->
+        <br>
+        <div class="d-grid gap-2">
+        <a href="{% url 'type_in_dep' id=d.id %}" class="btn btn-warning my-2 my-sm-0  btn-block">รายละเอียด</a>
+      </div>
       </center>
-    </a>
+    </div>
   </div>
 </div>
-
+    {%endfor%}
+  
+</div>
+</div>
 <script>
   function changeStatus(s) {
     status_open = s;

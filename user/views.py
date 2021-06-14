@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.template.context_processors import request
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
+from .models import User_in_type
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -38,3 +39,9 @@ def index_page(request):
 def logout_page(request):
     auth_logout(request)
     return redirect(to='index')
+
+
+# def divide_user(request):
+#     user_type = User_in_type.objects.get(name='')
+#     user_type.user.add()
+    

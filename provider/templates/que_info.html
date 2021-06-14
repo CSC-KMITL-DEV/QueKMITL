@@ -10,7 +10,7 @@
       <div class="col-sm-9 md-3">
           
         <table
-          class="table table-light table-borderless "
+          class="table table-light table-bordered "
           style=" font-size: 16px ;"
         >
           <thead>
@@ -76,16 +76,20 @@
 
               <td>
                 <div class="d-grid gap-2">
-                  <a class="btn btn-outline-primary btn-lg btn-block" href="">
-                    เพิ่มผู้เข้าคิวใหม่</a
+                  {%for qt in typeque%}
+                  {% if qt.name_type_que == 'Walk-in'%}
+                  <a class="btn btn-lg btn-block " style="background-color: #D5F3FE; border: black;border-style: solid;" href="">
+                    <i class="bi bi-plus-circle-fill"></i> เพิ่มผู้เข้าคิวใหม่</a
                   >
-                  <a class="btn btn-outline-warning btn-lg btn-block" href="">
-                    รายละเอียดผู้เข้าคิว</a
+                  {% endif %}
+                  {% endfor %}
+                  <a class="btn btn-lg btn-block" style="background-color: #0F5298; color: white;border: black;border-style: solid;" href="">
+                    <i class="bi bi-info-circle"></i> รายละเอียดผู้เข้าคิว</a
                   >
                   <a
-                    class="btn btn-outline-danger btn-lg btn-block"
+                    class="btn btn-lg btn-block " style="background-color: #00008B; color: white;border: black;border-style: solid;"
                     href="{% url 'close_que' info.id %}"
-                    >ปิดบริการ</a
+                    ><i class="bi bi-x-square-fill"></i> ปิดบริการ</a
                   >
                 </div>
               </td>
@@ -108,7 +112,7 @@
 
             <div class="row">
             <h1 style="color: blue">B0001</h1>
-            <h2 style="color: red; text-align: end; padding-right: 50px">
+            <h2 style="color: red; text-align: end; padding-right: 50px ">
               <b>ถึงคิวแล้ว</b>
             </h2>
 
@@ -123,24 +127,28 @@
               <button
                 type="button"
                 class="btn btn-success col-sm-3 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 เข้ารับบริการ
               </button>
               <button
                 type="button"
                 class="btn btn-warning col-sm-2 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 เลื่อนคิว
               </button>
               <button
                 type="button"
                 class="btn btn-danger col-sm-2 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 ยกเลิกคิว
               </button>
               <button
                 type="button"
                 class="btn btn-dark col-sm-2 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 ลบคิว
               </button>
@@ -171,24 +179,28 @@
               <button
                 type="button"
                 class="btn btn-success col-sm-3 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 เข้ารับบริการ
               </button>
               <button
                 type="button"
                 class="btn btn-warning col-sm-2 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 เลื่อนคิว
               </button>
               <button
                 type="button"
                 class="btn btn-danger col-sm-2 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 ยกเลิกคิว
               </button>
               <button
                 type="button"
                 class="btn btn-dark col-sm-2 btn-lg btn-block"
+                style="border-radius: 20px;"
               >
                 ลบคิว
               </button>

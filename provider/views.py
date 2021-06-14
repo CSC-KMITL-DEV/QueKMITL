@@ -298,4 +298,5 @@ def close_que(request, id):
     que = QueInfo.objects.get(pk=id)
     que.status = 0
     que.save()
-    return redirect(to="view_que")
+
+    return redirect(to="department")

@@ -4,9 +4,13 @@ from django.template.context_processors import request
 from .models import Department, QueInfo, TypeUser, Week_Day, TypeQue, Type_in_Dep
 from string import punctuation
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 @login_required
+@staff_member_required
+@user_passes_test(lambda u: u.is_superuser)
 def department(request):
     dep_all = Department.objects.all()
     context = {
@@ -16,6 +20,8 @@ def department(request):
 
 # Create your views here.
 @login_required
+@staff_member_required
+@user_passes_test(lambda u: u.is_superuser)
 def create_dep(request):
     context = {}
     symbols = set(punctuation)
@@ -41,7 +47,7 @@ def create_dep(request):
 
     return render(request, template_name='dep_form.html')
 
-
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def type_in_dep(request, id):
     dep = Department.objects.get(pk=id)
@@ -52,7 +58,7 @@ def type_in_dep(request, id):
     }
     return render(request, template_name='type_in_dep.html', context=context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def create_type_in_dep(request, id):
     dep = Department.objects.get(pk=id)
@@ -78,7 +84,7 @@ def create_type_in_dep(request, id):
     }
     return render(request, template_name='type_in_dep_form.html', context=context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def view_que(request, id):
     tdep = Type_in_Dep.objects.get(pk=id)
@@ -92,6 +98,7 @@ def view_que(request, id):
         }
     return render(request, template_name='view_que.html', context=context)
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def forms(request, id):
     dep_t = Type_in_Dep.objects.get(pk=id)
@@ -275,7 +282,7 @@ def forms(request, id):
     return render(request, template_name='forms.html', context=context)
 
 
-
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def info_que(request, id):
     context = {}
@@ -292,6 +299,7 @@ def info_que(request, id):
         }
     return render(request, template_name='que_info.html', context=context)
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
 def close_que(request, id):
     context = {}

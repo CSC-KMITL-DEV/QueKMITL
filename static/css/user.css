@@ -25,3 +25,31 @@ body{
 .nav-item {
     padding: 30px;
 }
+
+
+#boxque {
+    padding: 20px;
+    background-color: #CFCFCF;
+    border-radius: 15px;
+    border-color: orangered;
+    border-style: solid;
+    margin-left: 10px;
+    margin-bottom: 70px;
+
+
+    
+}
+
+
+#number {
+    content: counter(steps);
+    margin-right: 0.5rem;
+    background: orangered;
+    color: white;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    line-height: 1.2em;
+}

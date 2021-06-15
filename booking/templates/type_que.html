@@ -1,0 +1,33 @@
+{% extends "user_base.html" %} {% load static %}{% load socialaccount %} {% block content %}
+<h1>{{dep.name_dep}}</h1>
+<br>
+<div class="container-fluid">
+<div class="row">
+    {% for td in t_in_dep %}
+   
+   <div class="col-sm-4 md-3">
+     <div class="list-group">
+        <div class="container-fluid">
+       <div id="boxque" class="list-group-item list-group-item-action" style="height: 90px;">
+         <center>
+             <h3 class="mb-1"  style="color: orangered;"><b>{{td.name_que_dep}}</b></h3>
+           <br>
+           <div class="d-grid gap-2">
+           <a href="{% url 'info_type' id=td.id %}" class="btn my-2 my-sm-0  btn-block" style="background-color: orangered;color: white; border: black;border-style: solid;">รายละเอียด</a>
+         </div>
+         </center>
+        </div>
+       </div>
+     </div>
+   </div>
+   {%endfor%}
+</div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

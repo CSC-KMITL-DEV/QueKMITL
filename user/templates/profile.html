@@ -1,0 +1,38 @@
+{% extends "user_base.html" %} {% load static %}{% load socialaccount %} {% block content %}
+
+
+<h1>Profile</h1>
+<br>
+<center>
+    <div class="col-sm-9 md-3">
+        
+      <table
+        class="table table-light table-bordered "
+        style=" font-size: 16px ;"
+      >
+      
+        <tbody>
+            <tr>
+                <td><b>ID</b></td>
+                <td> <b>{{user.id}}</b></td>
+              </tr>
+              <tr>
+                <td><b>ชื่อ</b></td>
+                <td> <b>{{user.first_name}} {{ user.last_name }}</b></td>
+              </tr>
+          <tr>
+            <td><b>ประเภทผู้ใช้</b></td>
+            <td> <b>{{user_info.user_type}}</b></td>
+          </tr>
+          <tr>
+            <td><b>Email</b></td>
+            <td> <b>{{user.email}}</b></td>
+          </tr>
+  
+    </tbody>
+  </table>
+</div>
+</center>
+
+
+{% endblock %}

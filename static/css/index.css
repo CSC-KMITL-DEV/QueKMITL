@@ -54,12 +54,12 @@ h1 {text-align: center;
     border-color: orangered;
     border-style: solid;
     margin: 10px;
+    align-items: center;
 }
 
 #title_box{
-    padding: 5%;
+    padding: 20px;
     font-size: 25px;
-
 }
 
 #loginform {

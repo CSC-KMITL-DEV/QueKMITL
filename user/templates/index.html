@@ -81,13 +81,35 @@
                 ><b>หน้าหลัก</b></a
               >
             </li>
-            {% if user.is_authenticated %}
+            {% if user.is_superuser or user.is_staff %}
             <li class="nav-item">
               <a
                 class="nav-link active"
                 aria-current="page"
                 href="{% url 'department' %}"
                 ><b>จัดการคิว</b></a
+              >
+            </li>
+            {% endif%}
+
+            {% if user.is_superuser or user.is_authenticated %}
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'all_que' %}"
+                ><b>จองคิว</b></a
+              >
+            </li>
+            {% endif%}
+
+            {% if user.is_superuser or user.is_authenticated %}
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'all_que' %}"
+                ><b>คิวที่จองไว้</b></a
               >
             </li>
             {% endif%}
@@ -98,10 +120,11 @@
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle btn-light my-2 my-sm-0 btn-lg btn-block" href="" style="color: orangered; background-color: white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ user.first_name }} {{ user.last_name }}
+                  {{ user.first_name }} {{ user.last_name }} 
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="#">{{ user.email }}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'profile' id=user.id %}">Profile</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">
                     <i class="bi bi-box-arrow-left"></i>
@@ -135,7 +158,7 @@
 
       <br />
    
-      <div class="col-sm-12 md-3 ">
+      <div class="container-fluid">
 
       <div class="row">
         <div class="col-sm" id="boxform">

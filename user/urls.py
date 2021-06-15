@@ -9,5 +9,5 @@ urlpatterns = [
     path('check_login/', views.check_login, name='check_login'),
     path('accounts/', include('allauth.urls')),
     path('logout/', views.logout_page, name='logout'),
-   
+    path('profile/<int:id>/', views.profile, name='profile'),
 ]

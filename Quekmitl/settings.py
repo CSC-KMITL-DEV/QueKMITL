@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account', # New
     'allauth.socialaccount', # New 
     'allauth.socialaccount.providers.google', # New
+    'mathfilters',
 
 ]
 SITE_ID = 4

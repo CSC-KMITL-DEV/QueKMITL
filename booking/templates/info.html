@@ -76,13 +76,17 @@
               
                 <div class="d-grid gap-2">
                   {%for qt in typeque%}
+                  
                   {% if qt.name_type_que == 'แบบล่วงหน้า'%}
+                  <!-- (t.id == user_ty.user_type.id) -->
                   <a
                     class="btn btn-lg btn-block " style="background-color: #FE9D05; color: white;border: black;border-style: solid;"
-                    href="{% url 'booking' id=info.id %}"
+                    href="{% url 'create_booking' id=info.id %}"
                     ><i class="bi bi-check2-square"></i> จองคิว</a
                   >
+    
                   {% endif %}
+                
                   {% endfor %}
                 </div>
               </td>

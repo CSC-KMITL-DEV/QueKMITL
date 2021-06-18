@@ -1,0 +1,50 @@
+{% extends "user_base.html" %} {% load static %} {% block content %}
+{% if msg %}
+<script>
+  swal("{{msg}}", "บันทึกข้อมูลสำเร็จ", "success");
+</script> 
+{%endif%}
+
+<br />
+<h1>จองคิว : {{info.name_que}} ({{info.prefix}})</h1>
+<hr />
+
+
+<form class="form-inline" action="{% url 'create_booking' id=info.id %}" method="POST">
+    {% csrf_token %}
+
+    <!-- input quename  -->
+   <center>
+      <div class="col-sm-8 md-6">
+        <label class="form-label">เบอร์โทรศัพท์</label>
+        <input
+          type="text"
+          class="form-control"
+          name="phone"
+          placeholder="ใส่เบอร์โทรศัพท์"
+          required
+          max_length=10
+        />
+        {% if error %}
+        <div class="invalid-feedback d-block">{{error}}</div>
+        {%endif%}
+      </div>
+
+   
+
+    <!-- input submit  -->
+    <br />
+    <div class="row">
+      <div class="boxspace">
+        <button type="submit" class="btn btn-success col-sm-2">จองคิว</button>
+        <a class="btn btn-warning col-sm-2" href="{% url 'index' %}">
+          ยกเลิก
+        </a>
+      </div>
+    </div>
+  </form>
+</div>
+<br /><br />
+</center>
+
+{% endblock %}

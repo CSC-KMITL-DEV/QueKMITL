@@ -11,8 +11,14 @@ urlpatterns = [
     path('department/<int:id>/type_in_dep/create_type_in_dep/', views.create_type_in_dep, name='create_type_in_dep'),
     path('type_in_dep/<int:id>/view_que/', views.view_que, name='view_que'),
     path('type_in_dep/<int:id>/forms/', views.forms, name='forms'),
-
     path('info_que/<int:id>/', views.info_que, name='info_que'),
+    path('info_que/<int:id>/userbook', views.userbook, name='userbook'),
+    path('info_que/<int:id>/create_walkin', views.create_walkin, name='create_walkin'),
     path('close_que/<int:id>/', views.close_que, name='close_que'),
-   
+    path('using/<int:id>/', views.using, name='using'),    
+    path('success/<int:id>/', views.success, name='success'), 
+    path('putoff/<int:id>/', views.putoff, name='putoff'),     
+    path('delete/<int:id>/', views.delete, name='delete'),    
+    path('cancel/<int:id>/', views.cancel, name='cancel'),       
+
 ]

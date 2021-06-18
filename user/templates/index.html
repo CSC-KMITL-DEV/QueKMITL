@@ -92,7 +92,7 @@
             </li>
             {% endif%}
 
-            {% if user.is_superuser or user.is_authenticated %}
+            {% if user.is_authenticated and not user.is_staff %}
             <li class="nav-item">
               <a
                 class="nav-link active"
@@ -103,13 +103,13 @@
             </li>
             {% endif%}
 
-            {% if user.is_superuser or user.is_authenticated %}
+            {% if user.is_authenticated and not user.is_staff  %}
             <li class="nav-item">
               <a
                 class="nav-link active"
                 aria-current="page"
-                href="{% url 'all_que' %}"
-                ><b>คิวที่จองไว้</b></a
+                href="{% url 'my_booking' %}"
+                ><b>คิวของฉัน</b></a
               >
             </li>
             {% endif%}

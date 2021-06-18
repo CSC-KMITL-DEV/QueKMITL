@@ -1,21 +1,42 @@
-{% extends "provider_base.html" %} {% load static %} {% block content %}
+{% extends "provider_base.html" %} {% load static %}{% load mathfilters %} {% block content %}
 
-<br />
+<script>
+
+function openShow() {
+        document.getElementById("popupShow").style.display = "block";
+        
+      }
+function closeShow() {
+        document.getElementById("popupShow").style.display = "none";
+      }
+
+
+</script>
+<br/>
+<button
+  class="btn col-sm-2 btn-lg"  id="popup" onclick="openShow()"
+  style="background-color: lightskyblue;border: black;border-style: solid; position: relative; float: right; margin-left: -50%"
+>
+รายละเอียดคิว
+</button>
+
 <h1>จัดลำดับคิว : {{info.name_que}} ({{info.prefix}})</h1>
+
 <hr />
 <br />
 <div class="row">
-  <div class="col-sm-5 md-3">
+
+<div class="popupShow" id="popupShow">
     <center>
-      <div class="col-sm-9 md-3">
-          
-        <table
-          class="table table-light table-bordered "
-          style=" font-size: 16px ;"
-        >
+      <br><br><br><br><br><br><br><br><br>
+      <div class="col-sm-5 md-3">
+        <table class="table table-light table-bordered " style=" font-size: 16px ;">
           <thead>
             <tr>
-              <th></th>
+              <th>
+              <div onclick="closeShow()" style="align-items: flex-end;">
+                <i class="bi bi-x-square-fill" style="color: red;"></i></div>
+              </th>
               <th>รายละเอียด</th>
             </tr>
           </thead>
@@ -78,19 +99,18 @@
                 <div class="d-grid gap-2">
                   {%for qt in typeque%}
                   {% if qt.name_type_que == 'Walk-in'%}
-                  <a class="btn btn-lg btn-block " style="background-color: #D5F3FE; border: black;border-style: solid;" href="">
-                    <i class="bi bi-plus-circle-fill"></i> เพิ่มผู้เข้าคิวใหม่</a
-                  >
+                  <a class="btn btn-lg btn-block " style="background-color: #D5F3FE; border: black;border-style: solid;"
+                    href="{% url 'create_walkin' id=info.id %}">
+                    <i class="bi bi-plus-circle-fill"></i> เพิ่มผู้เข้าคิวใหม่</a>
                   {% endif %}
                   {% endfor %}
-                  <a class="btn btn-lg btn-block" style="background-color: #0F5298; color: white;border: black;border-style: solid;" href="">
-                    <i class="bi bi-info-circle"></i> รายละเอียดผู้เข้าคิว</a
-                  >
-                  <a
-                    class="btn btn-lg btn-block " style="background-color: #00008B; color: white;border: black;border-style: solid;"
-                    href="{% url 'close_que' info.id %}"
-                    ><i class="bi bi-x-square-fill"></i> ปิดบริการ</a
-                  >
+                  <a class="btn btn-lg btn-block"
+                    style="background-color: #0F5298; color: white;border: black;border-style: solid;"
+                    href="{% url 'userbook' id=info.id %}">
+                    <i class="bi bi-info-circle"></i> รายละเอียดผู้เข้าคิว</a>
+                  <a class="btn btn-lg btn-block "
+                    style="background-color: #00008B; color: white;border: black;border-style: solid;"
+                    href="{% url 'close_que' info.id %}"><i class="bi bi-x-square-fill"></i> ปิดบริการ</a>
                 </div>
               </td>
             </tr>
@@ -98,123 +118,229 @@
         </table>
       </div>
     </center>
+</div>
+
+  <br />
+  <br />
+  <br />
+
+
+
+  <div class="col-sm md-3 ">
+    <h2 style="text-align: center;">คิวที่จองล่วงหน้า</h2>
+    <div class="list-group" style="padding-bottom: 10px;">
+
+      {% for u in using_status %}
+      <div id="boxque" class="list-group-item list-group-item-action" >
+        <div class="row">
+          <h1 style="color: blue">{{u.que_id.prefix}}{{u.id}}</h1>
+
+          <h2 style="color: red; text-align: end; padding-right: 50px ">
+            <b>เข้ารับบริการอยู่</b>
+          </h2>
+          <div class="col-sm">
+            <h2>คุณ {{u.user_id.first_name}} {{u.user_id.last_name}}</h2>
+            <h2>เบอร์ติดต่อ : {{u.phone}}</h2>
+          </div>
+        </div>
+
+        <center>
+          <div class="d-grid gap-2 d-md-block">
+            <a class="btn btn-success col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'success' id=u.id%}">
+              บริการเสร็จสิ้น
+            </a>
+            <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'cancel' id=u.id%}">
+              ยกเลิกคิว
+            </a>
+            <a class="btn btn-dark col-sm-2 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'delete' id=u.id%}">
+              ลบคิว
+            </a>
+          </div>
+        </center>
+      </div>
+
+      {%endfor%}
+
+      {% for bf in booking_before %}
+      <div id="boxque" class="list-group-item list-group-item-action">
+        <div class="row">
+          <h1 style="color: blue">{{bf.que_id.prefix}}{{bf.id}}</h1>
+
+
+          <h2 style="color: black; text-align: end; padding-right: 50px ">
+            <b>รอ {{ forloop.counter|mul:info.wait_time }} นาที</b>
+
+          </h2>
+        
+
+          <div class="col-sm">
+            <h2>คุณ {{bf.user_id.first_name}} {{bf.user_id.last_name}}</h2>
+            <h2>เบอร์ติดต่อ : {{bf.phone}}</h2>
+          </div>
+        </div>
+
+        <center>
+          <div class="d-grid gap-2 d-md-block">
+
+            {% if forloop.counter == 1 %}  
+            <a class="btn btn-success col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'using' id=bf.id%}">
+              เข้ารับบริการ
+            </a>
+            
+            <a class="btn btn-warning col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'putoff' id=bf.id%}">
+              เลื่อนคิว </a>
+          
+            <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'cancel' id=bf.id%}">
+              ยกเลิกคิว
+            </a>
+            <a class="btn btn-dark col-sm-2 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'delete' id=bf.id%}">
+              ลบคิว
+            </a>
+
+
+            {% else %}  
+            <a class="btn btn-warning col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+            href="{% url 'putoff' id=bf.id%}">
+            เลื่อนคิว </a>
+        
+          <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+            href="{% url 'cancel' id=bf.id%}">
+            ยกเลิกคิว
+          </a>
+          <a class="btn btn-dark col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+            href="{% url 'delete' id=bf.id%}">
+            ลบคิว
+          </a>
+
+            {%endif%}
+          </div>
+        </center>
+      </div>
+      {%endfor%}
+</div>
+</div>
+      <div class="col-sm md-3 ">
+      <h2 style="text-align: center;">คิวที่เลื่อน</h2>
+      <div class="list-group" style="padding-bottom: 10px;">
+
+      {% for pf in que_putoff %}
+      <div id="boxque" class="list-group-item list-group-item-action">
+        <div class="row">
+          <h1 style="color: blue">{{pf.que_id.prefix}}{{pf.id}}</h1>
+
+          
+          <h2 style="color: black; text-align: end; padding-right: 50px ">
+            <b>รอ {{ forloop.counter|mul:info.wait_time }} นาที</b>
+          </h2>
+       
+
+          <div class="col-sm">
+            <h2>คุณ {{pf.user_id.first_name}} {{pf.user_id.last_name}}</h2>
+            <h2>เบอร์ติดต่อ : {{pf.phone}}</h2>
+          </div>
+        </div>
+
+        <center>
+          <div class="d-grid gap-2 d-md-block">
+
+            {% if forloop.counter == 1%}
+            <a class="btn btn-success col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'success' id=pf.id%}">
+              เข้ารับบริการ
+            </a>
+            {%endif%}
+
+            <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'cancel' id=pf.id%}">
+              ยกเลิกคิว
+            </a>
+            <a class="btn btn-dark col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              href="{% url 'delete' id=pf.id%}">
+              ลบคิว
+            </a>
+          </div>
+        </center>
+      </div>
+    </div>
+    {%endfor%}
+    <br>
   </div>
 
-  <br />
-  <br />
-  <br />
-
-  <div class="col-sm-7 md-3 ">
-    
-      <div class="list-group">
-        <div id="boxque" class="list-group-item list-group-item-action" href="">
-            
-
-            <div class="row">
-            <h1 style="color: blue">B0001</h1>
-            <h2 style="color: red; text-align: end; padding-right: 50px ">
-              <b>ถึงคิวแล้ว</b>
-            </h2>
-
-            <div class="col-sm">
-              <h2>คุณ lululululu ปปปปปปปปปปปป</h2>
-              <h2>เบอร์ติดต่อ : 081-1111-1111</h2>
-            </div>
-          </div>
-
-          <center>
-            <div class="d-grid gap-2 d-md-block">
-              <button
-                type="button"
-                class="btn btn-success col-sm-3 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                เข้ารับบริการ
-              </button>
-              <button
-                type="button"
-                class="btn btn-warning col-sm-2 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                เลื่อนคิว
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger col-sm-2 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                ยกเลิกคิว
-              </button>
-              <button
-                type="button"
-                class="btn btn-dark col-sm-2 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                ลบคิว
-              </button>
-            </div>
-          </center>
-        </div>
 
 
 
+  <div class="col-sm md-3 ">
+    <h2 style="text-align: center;">คิว Walk-in</h2>
+    <div class="list-group" style="padding-bottom: 10px;">
 
-        <div id="boxque" class="list-group-item list-group-item-action" href="">
-            
+    {% for pf in que_putoff %}
+    <div id="boxque" class="list-group-item list-group-item-action">
+      <div class="row">
+        <h1 style="color: blue">{{pf.que_id.prefix}}{{pf.id}}</h1>
 
-            <div class="row">
-            <h1 style="color: blue">B0002</h1>
-            <h2 style="color: black; text-align: end; padding-right: 50px">
-              <b>รอ 10 นาที</b>
-            </h2>
-
-            <div class="col-sm">
-              <h2>คุณ lululululu ปปปปปปปปปปปป</h2>
-              <h2>เบอร์ติดต่อ : 081-1111-1111</h2>
-            </div>
-          </div>
-
-          <center>
-            <div class="d-grid gap-2 d-md-block">
-              <button
-                type="button"
-                class="btn btn-success col-sm-3 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                เข้ารับบริการ
-              </button>
-              <button
-                type="button"
-                class="btn btn-warning col-sm-2 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                เลื่อนคิว
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger col-sm-2 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                ยกเลิกคิว
-              </button>
-              <button
-                type="button"
-                class="btn btn-dark col-sm-2 btn-lg btn-block"
-                style="border-radius: 20px;"
-              >
-                ลบคิว
-              </button>
-            </div>
-          </center>
-        </div>
-
-
-
-
-
+        
+        <h2 style="color: black; text-align: end; padding-right: 50px ">
+          <b>รอ {{ forloop.counter|mul:info.wait_time }} นาที</b>
+        </h2>
      
+
+        <div class="col-sm">
+          <h2>คุณ {{pf.user_id.first_name}} {{pf.user_id.last_name}}</h2>
+          <h2>เบอร์ติดต่อ : {{pf.phone}}</h2>
+        </div>
+      </div>
+
+      <center>
+        <div class="d-grid gap-2 d-md-block">
+
+          {% if forloop.counter == 1%}
+          <a class="btn btn-success col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
+            href="{% url 'success' id=pf.id%}">
+            เข้ารับบริการ
+          </a>
+          {%endif%}
+
+          <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+            href="{% url 'cancel' id=pf.id%}">
+            ยกเลิกคิว
+          </a>
+          <a class="btn btn-dark col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+            href="{% url 'delete' id=pf.id%}">
+            ลบคิว
+          </a>
+        </div>
+      </center>
     </div>
   </div>
+  {%endfor%}
+
+  <br>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 </div>
 {% endblock %}

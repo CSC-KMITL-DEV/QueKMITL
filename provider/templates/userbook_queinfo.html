@@ -1,0 +1,154 @@
+{% extends "provider_base.html" %} {% load static %}
+
+{% block content %}
+<br>
+<h1>รายละเอียดผู้เข้าคิว : {{info.name_que}} ({{info.prefix}})</h1>
+<hr>
+<br>
+
+
+<div class="container-fluid">
+    <div class="row">
+
+
+    <div class="col-sm-4 md-3">
+    <table class="table table-light table-bordered ">
+        <thead>
+          <tr>   
+            <th colspan="2" style="text-align: center;">ประเภท</th>
+            <th >จำนวนคิว</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><p id="number"></p></td>
+            <td><b>คิวแบบล่วงหน้า</b></td>
+            <td><b>{{count_bf}}</b></td>
+        </tr>
+        <tr>
+            <td><p id="number" style="background-color: orangered;"></p></td>
+            <td><b>คิวแบบล่วงหน้า (เลื่อนคิว)</b></td>
+            <td><b>{{count_bp}}</b></td>
+
+        </tr>
+
+        <tr>
+            <td><p id="number" style="background-color: blue;"></p></td>
+            <td><b>คิวแบบ Walk-in </b></td>
+            <td><b>{{count_w}}</b></td>
+
+        </tr>
+
+    
+        </tbody>
+            </table>
+        </div>
+
+
+<div class="col-sm-8 md-3">
+    {% for bf in booking_before %}
+    
+        <div class="list-group" style="padding-bottom: 10px;">
+            <div id="boxque" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-sm-1 md-3">
+                <p id="number">{{forloop.counter}}</p>
+            </div>
+            <div class="col-sm-4 md-3">
+                <h2>{{bf.que_id.prefix}}{{bf.id}}</h2>
+            </div>
+
+            <div class="col-sm-2 md-3">
+                <img src="{% static "icon/user.png" %}" width="60px" height="auto"/>
+            </div>
+            
+                <div class="col-sm md-3">
+                    <p class="mb-1">ชื่อ : <b>{{bf.user_id.first_name}} {{bf.user_id.last_name}}</b></p>
+                    <p class="mb-1">อีเมล : <b>{{bf.user_id.email}}</b></p>
+                    <p class="mb-1">เบอร์โทรศัพท์ : <b>{{bf.phone}}</b></p>
+                    <p class="mb-1">ประเภทบุคคล : <b>{{bf.user_type.user_type}}</b></p>
+                  </div>
+
+            
+        </div>
+</div>
+</div>
+
+
+
+{%endfor%}
+
+
+    {% for bp in booking_putoff %}
+        <div class="list-group" style="padding-bottom: 10px;">
+            <div id="boxque" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-sm-1 md-3">
+                <p id="number" style="background-color: orangered;">{{forloop.counter}}</p>
+            </div>
+            <div class="col-sm-4 md-3">
+                <h2>{{bp.que_id.prefix}}{{bp.id}}</h2>
+            </div>
+
+            <div class="col-sm-2 md-3">
+                <img src="{% static "icon/user.png" %}" width="60px" height="auto"/>
+            </div>
+            
+                <div class="col-sm md-3">
+                    <p class="mb-1">ชื่อ : <b>{{bp.user_id.first_name}} {{bp.user_id.last_name}}</b></p>
+                    <p class="mb-1">อีเมล : <b>{{bp.user_id.email}}</b></p>
+                    <p class="mb-1">เบอร์โทรศัพท์ : <b>{{bp.phone}}</b></p>
+                    <p class="mb-1">ประเภทบุคคล : <b>{{bp.user_type.user_type}}</b></p>
+                  </div>
+
+            
+        </div>
+</div>
+</div>
+
+
+
+{%endfor%}
+
+    {% for w in walkin_que %}
+  
+        <div class="list-group" style="padding-bottom: 10px;">
+            <div id="boxque" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-sm-1 md-3">
+                <p id="number" style="background-color: blue;">{{forloop.counter}}</p>
+            </div>
+            <div class="col-sm-4 md-3">
+                <h2>{{w.que_id.prefix}}00{{w.id}}</h2>
+            </div>
+
+            <div class="col-sm-2 md-3">
+                <img src="{% static "icon/user.png" %}" width="60px" height="auto"/>
+            </div>
+            
+                <div class="col-sm md-3">
+                    <p class="mb-1">ชื่อ : <b>{{w.name}}</b></p>
+                    <p class="mb-1">เบอร์โทรศัพท์ : <b>{{w.phone}}</b></p>
+                    <p class="mb-1">ประเภทบุคคล : <b>{{w.user_type.name_type_user}}</b></p>
+                  </div>
+
+            
+        </div>
+</div>
+</div>
+
+
+{%endfor%}
+ 
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

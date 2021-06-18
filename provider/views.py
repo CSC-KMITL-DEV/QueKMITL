@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.context_processors import request
 from .models import Department, QueInfo, TypeUser, Week_Day, TypeQue, Type_in_Dep
+from booking.models import Que_booking, Que_walkin
 from string import punctuation
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
@@ -9,8 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 @login_required
-@staff_member_required
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 def department(request):
     dep_all = Department.objects.all()
     context = {
@@ -20,8 +20,7 @@ def department(request):
 
 # Create your views here.
 @login_required
-@staff_member_required
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 def create_dep(request):
     context = {}
     symbols = set(punctuation)
@@ -47,7 +46,7 @@ def create_dep(request):
 
     return render(request, template_name='dep_form.html')
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 @login_required
 def type_in_dep(request, id):
     dep = Department.objects.get(pk=id)
@@ -58,7 +57,7 @@ def type_in_dep(request, id):
     }
     return render(request, template_name='type_in_dep.html', context=context)
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 @login_required
 def create_type_in_dep(request, id):
     dep = Department.objects.get(pk=id)
@@ -84,7 +83,7 @@ def create_type_in_dep(request, id):
     }
     return render(request, template_name='type_in_dep_form.html', context=context)
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 @login_required
 def view_que(request, id):
     tdep = Type_in_Dep.objects.get(pk=id)
@@ -98,7 +97,7 @@ def view_que(request, id):
         }
     return render(request, template_name='view_que.html', context=context)
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 @login_required
 def forms(request, id):
     dep_t = Type_in_Dep.objects.get(pk=id)
@@ -282,29 +281,142 @@ def forms(request, id):
     return render(request, template_name='forms.html', context=context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda s: s.is_staff)
 @login_required
 def info_que(request, id):
     context = {}
     info = QueInfo.objects.get(pk=id)
-
     day = info.day_open.all()
     typeque = info.type_que.all()
     typeuser = info.type_user.all()
+    using_status = Que_booking.objects.filter(que_id=id,status=5)
+    booking_before = Que_booking.objects.filter(que_id=id,status=1)
+    que_putoff = Que_booking.objects.filter(que_id=id,status=2)
+    booking_walkin = Que_walkin.objects.filter(que_id=id,status=1)
     context = {
         'info' : info,
         'day' : day,
         'typeque' : typeque,
-        'typeuser' : typeuser,        
+        'typeuser' : typeuser,  
+        'booking_before' : booking_before,
+        'booking_walkin' : booking_walkin,
+        'que_putoff' : que_putoff,
+        'using_status' : using_status,
         }
     return render(request, template_name='que_info.html', context=context)
 
-@user_passes_test(lambda u: u.is_superuser)
+
+
+@user_passes_test(lambda s: s.is_staff)
 @login_required
 def close_que(request, id):
     context = {}
     que = QueInfo.objects.get(pk=id)
     que.status = 0
     que.save()
+    return redirect('view_que',id=que.type_in_dep_id.id)
 
-    return redirect(to="department")
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def success(request,id):
+    que_book = Que_booking.objects.get(pk=id)
+    que_book.status = 6
+    que_book.save()
+
+    return redirect("info_que", id=que_book.que_id.id)
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def using(request,id):
+    que_book = Que_booking.objects.get(pk=id)
+    que_book.status = 5
+    que_book.save()
+    return redirect('info_que', id=que_book.que_id.id)
+
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def putoff(request,id):
+    que_book = Que_booking.objects.get(pk=id)
+    que_book.status = 2
+    que_book.save()
+    return redirect('info_que', id=que_book.que_id.id)    
+    
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def delete(request,id):
+    que_book = Que_booking.objects.get(pk=id)
+    que_book.status = 4
+    que_book.save()
+    return redirect('info_que', id=que_book.que_id.id)    
+    
+    
+    
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def cancel(request,id):
+    que_book = Que_booking.objects.get(pk=id)
+    que_book.status = 3
+    que_book.save()
+    return redirect('info_que', id=que_book.que_id.id)    
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def userbook(request,id):
+    info = QueInfo.objects.get(pk=id)
+    booking_before = Que_booking.objects.filter(que_id=id,status=1)
+    booking_putoff = Que_booking.objects.filter(que_id=id,status=2)
+    walkin_que = Que_walkin.objects.filter(que_id=id,status=1)
+    count_bf = booking_before.count()
+    count_bp = booking_putoff.count()
+    count_w = walkin_que.count()
+    context = {
+        'info' : info,
+        'booking_before' : booking_before,
+        'booking_putoff' : booking_putoff,
+        'walkin_que' : walkin_que,
+        'count_bf' : count_bf,
+        'count_bp' : count_bp,
+        'count_w' : count_w
+        }
+    return render(request, template_name='userbook_queinfo.html', context=context)
+
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def create_walkin(request,id):
+    info = QueInfo.objects.get(pk=id)
+    typeu = info.type_user.all()
+    if request.method == 'POST':
+        if (request.POST.get('phone').isnumeric() == True) and (len(request.POST.get('phone')) == 10):
+            
+            que_walkin = Que_walkin.objects.create(
+            name = request.POST.get('username'),
+            user_type_id = request.POST.get('types_id'),
+            phone = request.POST.get('phone'),
+            que_id = info,)
+
+            que_walkin.save()
+            msg = 'Successfully'
+            context = {
+            'msg' : msg,
+            'info' : info,
+            'typeu' : typeu,
+            }
+            return render(request, template_name='create_walkin.html', context=context)
+        else:
+            error = 'กรุณาใส่เบอร์โทรศัพท์ให้ถูกต้อง'
+            context = {
+                'info' : info,
+                'typeu' : typeu,
+                'error' : error
+                }
+            return render(request, template_name='create_walkin.html', context=context)
+    else:
+        booking = Que_walkin.objects.none()
+    context = {
+        'info' : info,
+        'typeu' : typeu,     
+        }
+    return render(request, template_name='create_walkin.html', context=context)

@@ -1,11 +1,130 @@
 {% extends "user_base.html" %} {% load static %} {% block content %}
 
-<br />
 <h1>คิวของฉัน</h1>
 <hr />
 <br />
 
- 
+<div class="container-fluid">
+<div class="row">
+{% for q in my_list%}
+
+  <div class="col-sm-4 md-3">
+    <center>
+
+        <table class="table table-light table-bordered " style=" font-size: 16px ;">
+          <thead>
+            <tr>
+              <th colspan="2" style="text-align: center;">{{q.que_id.name_que}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>ลำดับคิว</b></td>
+              <td>{{q.que_id.prefix}}{{q.id}}</td>
+            </tr>
+
+            <tr>
+              <td><b>หน่วยงาน</b></td>
+              <td>{{q.que_id.type_in_dep_id.dep_id.name_dep}}</td>
+            </tr>
+
+            <tr>
+              <td><b>ประเภทผู้ใช้</b></td>
+              <td>{{q.user_type.user_type}}</td>
+            </tr>
+
+            <tr>
+              <td><b>เบอร์โทรศัพท์</b></td>
+              <td>{{q.phone}}</td>
+            </tr>
+
+            <tr>
+              <td><b>วันที่</b></td>
+              <td>{{q.que_id.date_start}} ถึง {{q.que_id.date_end}}</td>
+            </tr>
+           
+            <tr>
+              <td><b>เวลา</b></td>
+              <td>{{q.que_id.time_start}} ถึง {{q.que_id.time_end}}</td>
+            </tr>
+            <tr>
+              <td><b>กรุณามาก่อนเวลานัด</b></td>
+              <td>{{q.que_id.wait_time}} นาที</td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="d-grid gap-2">
+                  <a class="btn btn-warning btn-lg btn-block" href="{% url 'my_putoff' id=q.id%}">
+                    เลื่อนคิว
+                  </a>
+                </div>
+              </td>
+              <td>
+                <div class="d-grid gap-2"><a class="btn btn-danger btn-lg btn-block" href="{% url 'my_cancel' id=q.id%}">
+                    ยกเลิกคิว
+                  </a></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </center>
+  </div>
+
+{%endfor%}
+
+
+{% for pf in my_putoff%}
+
+  <div class="col-sm-3 md-3">
+    <center>
+
+        <table class="table table-light table-bordered " style=" font-size: 16px ;">
+          <thead>
+            <tr>
+              <th colspan="2" style="text-align: center;">{{pf.que_id.name_que}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>ลำดับคิว</b></td>
+              <td>{{pf.que_id.prefix}}{{pf.id}}</td>
+            </tr>
+            <tr>
+              <td><b>หน่วยงาน</b></td>
+              <td>{{pf.que_id.type_in_dep_id.dep_id.name_dep}}</td>
+            </tr>
+
+            <tr>
+              <td><b>ประเภทผู้ใช้</b></td>
+              <td>{{pf.user_type.user_type}}</td>
+            </tr>
+
+            <tr>
+              <td><b>เบอร์โทรศัพท์</b></td>
+              <td>{{pf.phone}}</td>
+            </tr>
+            <tr>
+              <td><b>กรุณามาก่อนเวลานัด</b></td>
+              <td>{{pf.que_id.wait_time}} นาที</td>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+                <div class="d-grid gap-2"><a class="btn btn-danger btn-lg btn-block" href="{% url 'my_cancel' id=pf.id%}">
+                    ยกเลิกคิว
+                  </a></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </center>
+  </div>
+
+{%endfor%}
+</div>
+</div>
+
 
 
 {% endblock %}

@@ -39,15 +39,15 @@ class Que_walkin(models.Model):
     phone = models.CharField(max_length=10)
     
     WAIT = '1'
-    CANCEL = '2'
-    DELETE = '3'
-    USING = '4'
-
+    DELETE = '2'
+    USING = '3'
+    DONE = '4'
     TYPES = (
         (WAIT, 'wait'),
-        (CANCEL, 'cancel'),
         (DELETE, 'delete'),
         (USING, 'using'),
+        (DONE, 'done'),
+
     )
 
     status = models.CharField(max_length=2, choices=TYPES, default='1')

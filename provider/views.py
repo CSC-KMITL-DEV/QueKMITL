@@ -291,8 +291,12 @@ def info_que(request, id):
     typeuser = info.type_user.all()
     using_status = Que_booking.objects.filter(que_id=id,status=5)
     booking_before = Que_booking.objects.filter(que_id=id,status=1)
+    sum_bf = booking_before.count()
     que_putoff = Que_booking.objects.filter(que_id=id,status=2)
+    sum_qp = que_putoff.count()
+    time_wait_walkin = sum_bf + sum_qp
     booking_walkin = Que_walkin.objects.filter(que_id=id,status=1)
+    using_walkin = Que_walkin.objects.filter(que_id=id,status=3)
     context = {
         'info' : info,
         'day' : day,
@@ -302,6 +306,9 @@ def info_que(request, id):
         'booking_walkin' : booking_walkin,
         'que_putoff' : que_putoff,
         'using_status' : using_status,
+        'sum_bf' : sum_bf,
+        'time_wait_walkin' : time_wait_walkin,
+        'using_walkin' : using_walkin,
         }
     return render(request, template_name='que_info.html', context=context)
 
@@ -360,6 +367,35 @@ def cancel(request,id):
     que_book.status = 3
     que_book.save()
     return redirect('info_que', id=que_book.que_id.id)    
+
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def success_walkin(request,id):
+    que_walkin = Que_walkin.objects.get(pk=id)
+    que_walkin.status = 4
+    que_walkin.save()
+
+    return redirect("info_que", id=que_walkin.que_id.id)
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def using_walkin(request,id):
+    que_walkin = Que_walkin.objects.get(pk=id)
+    que_walkin.status = 3
+    que_walkin.save()
+    return redirect('info_que', id=que_walkin.que_id.id)
+
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def delete_walkin(request,id):
+    que_walkin = Que_walkin.objects.get(pk=id)
+    que_walkin.status = 2
+    que_walkin.save()
+    return redirect('info_que', id=que_walkin.que_id.id)   
+
+
 
 @user_passes_test(lambda s: s.is_staff)
 @login_required

@@ -19,6 +19,10 @@ urlpatterns = [
     path('success/<int:id>/', views.success, name='success'), 
     path('putoff/<int:id>/', views.putoff, name='putoff'),     
     path('delete/<int:id>/', views.delete, name='delete'),    
-    path('cancel/<int:id>/', views.cancel, name='cancel'),       
+    path('cancel/<int:id>/', views.cancel, name='cancel'),    
+    path('using_walkin/<int:id>/', views.using_walkin, name='using_walkin'),    
+    path('success_walkin/<int:id>/', views.success_walkin, name='success_walkin'),  
+    path('delete_walkin/<int:id>/', views.delete_walkin, name='delete_walkin'),    
+  
 
 ]

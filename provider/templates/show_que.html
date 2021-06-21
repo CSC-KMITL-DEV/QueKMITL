@@ -49,19 +49,21 @@
       <div id="boxque" class="list-group-item list-group-item-action">
        <h2><b>คิวรอรับบริการ</b></h2>
        <hr>
-       
-            {% for bw in book_wait%}
+       {% for key,value in thisdict.items %}
+
        <br>
         <div class="row">  
           <div class="col-sm md-3">
-            <h2>{{bw.que_id.name_que}}</h2>
+            <h2>{{key}}</h2>
         </div>
             <div class="col-sm md-3">
-                <h2>{{bw.count}}</h2>
+                <h2>{{ value }}</h2>
                 </div>        
         </div>
         <br>
             {% endfor %}  
+
+       
     </div>
 
 </div>

@@ -469,6 +469,15 @@ def show_que(request):
     walk_wait = Que_walkin.objects.filter(status=1)
 
     que = QueInfo.objects.all()
+    thisdict =	{}
+    for i in que:
+        for j in book_wait:
+            if j.que_id.id == i.id:
+                count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+                count += Que_booking.objects.filter(que_id=i.id,status=2).count()
+                count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                thisdict[i.name_que] = count
+
 
     context = {
         'book_que' : book_que,
@@ -476,6 +485,7 @@ def show_que(request):
         'book_wait' : book_wait,
         'walk_wait' : walk_wait,
         'que' : que,
+        'thisdict' : thisdict
         }
     return render(request, template_name='show_que.html', context=context)
 

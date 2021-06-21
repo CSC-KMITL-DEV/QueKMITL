@@ -55,6 +55,7 @@ def info(request, id):
     current_user = request.user
     info = QueInfo.objects.get(pk=id)
     user_ty = User_in_type.objects.get(user=current_user)
+    user_ty = user_ty.user_type
     day = info.day_open.all()
     typeque = info.type_que.all()
     typeuser = info.type_user.all()
@@ -131,3 +132,15 @@ def my_putoff(request,id):
     que_book.status = 2
     que_book.save()
     return redirect('my_booking')    
+
+
+
+@user_passes_test(lambda u: u.is_authenticated)
+@login_required
+def my_history(request):
+    current_user = request.user
+    history = Que_booking.objects.filter(status=6,user_id=current_user)
+    context = {'history' : history}
+
+    return render(request, template_name='my_history.html', context=context)
+   

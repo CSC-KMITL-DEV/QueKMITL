@@ -9,23 +9,22 @@
   <div class="row">
     {% for que in que_list %}
      
-    <div class="col-sm-6 md-3">
+    <div class="col-sm-4 md-3">
       <div class="list-group">
         <a id="boxque" class="list-group-item list-group-item-action" href="{% url 'info' id=que.id %}">
           <div class="row">
-            <div class="col-sm-7 md-3">
-            
+            <div class="col-sm-4 md-3">
+              <br> <br>
+
               <p id="number">{{forloop.counter}}</p>
+            </div>
+            
+             <div class="col-sm-5 md-3">
+              <br> <br>
               <center><h4 class="mb-1"><b>{{que.name_que}}</b></h4></center>
             </div>
-            <div class="col-sm-5 md-3">
-              <p class="mb-1">ตั้งแต่วันที่ : <b>{{que.date_start}}</b></p>
-              <p class="mb-1">สิ้นสุดวันที่ : <b>{{que.date_end}}</b></p>
-              <p class="mb-1">
-                เวลา : <b>{{que.time_start}}</b> ถึง <b>{{que.time_end}}</b>
-              </p>
-            </div>
-          </div>
+           </div>
+          <br>
         </a>
       </div>
     </div>

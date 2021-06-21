@@ -90,6 +90,14 @@
                 ><b>จัดการคิว</b></a
               >
             </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'show_que' %}"
+                ><b>แสดงลำดับคิว</b></a
+              >
+            </li>            
             {% endif%}
 
             {% if user.is_authenticated and not user.is_staff %}
@@ -101,9 +109,7 @@
                 ><b>จองคิว</b></a
               >
             </li>
-            {% endif%}
-
-            {% if user.is_authenticated and not user.is_staff  %}
+            
             <li class="nav-item">
               <a
                 class="nav-link active"
@@ -112,6 +118,17 @@
                 ><b>คิวของฉัน</b></a
               >
             </li>
+
+
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'my_history' %}"
+                ><b>ประวัติการใช้งาน</b></a
+              >
+            </li>
+
             {% endif%}
           </ul>
 

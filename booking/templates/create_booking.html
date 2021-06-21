@@ -10,13 +10,23 @@
 <hr />
 
 
+
+<div style="background-color: #d9d9d9; border-radius: 20px; padding: 20px;">
+  <br><br>
+
 <form class="form-inline" action="{% url 'create_booking' id=info.id %}" method="POST">
     {% csrf_token %}
 
     <!-- input quename  -->
    <center>
       <div class="col-sm-8 md-6">
-        <label class="form-label">เบอร์โทรศัพท์</label>
+
+        <div class="row">
+
+        <div class="col-sm-2">
+        <label class="form-label">เบอร์โทรศัพท์ : </label>
+        </div>
+        <div class="col-sm">
         <input
           type="text"
           class="form-control"
@@ -25,24 +35,30 @@
           required
           max_length=10
         />
+       </div>
         {% if error %}
         <div class="invalid-feedback d-block">{{error}}</div>
         {%endif%}
+
+      </div>
+
       </div>
 
    
 
     <!-- input submit  -->
-    <br />
+    <br /><br />
     <div class="row">
       <div class="boxspace">
-        <button type="submit" class="btn btn-success col-sm-2">จองคิว</button>
-        <a class="btn btn-warning col-sm-2" href="{% url 'index' %}">
+        <button type="submit" class="btn col-sm-2" style="background-color: orangered;color: white;">จองคิว</button>
+        <a class="btn btn-light col-sm-2" href="{% url 'index' %}">
           ยกเลิก
         </a>
       </div>
     </div>
+    <br><br>
   </form>
+</div>
 </div>
 <br /><br />
 </center>

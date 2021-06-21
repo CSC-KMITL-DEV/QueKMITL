@@ -1,4 +1,4 @@
-{% extends "user_base.html" %} {% load static %} {% block content %}
+{% extends "user_base.html" %} {% load static %}{% block content %}
 
 <br />
 <h1>รายละเอียดคิว : {{info.name_que}} ({{info.prefix}})</h1>
@@ -74,21 +74,76 @@
               <td colspan="2">
 
               
-                <div class="d-grid gap-2">
+                <!-- <div class="d-grid gap-2">
                   {%for qt in typeque%}
-                  
                   {% if qt.name_type_que == 'แบบล่วงหน้า'%}
-                  <!-- (t.id == user_ty.user_type.id) -->
                   <a
                     class="btn btn-lg btn-block " style="background-color: #FE9D05; color: white;border: black;border-style: solid;"
                     href="{% url 'create_booking' id=info.id %}"
                     ><i class="bi bi-check2-square"></i> จองคิว</a
                   >
-    
                   {% endif %}
-                
                   {% endfor %}
+
+
+                  {% for u in typeuser %}
+                  {% if user_ty.user_type.id == user_ty %}
+                  <a
+                    class="btn btn-lg btn-block " style="background-color: #FE9D05; color: white;border: black;border-style: solid;"
+                    href="{% url 'create_booking' id=info.id %}"
+                    ><i class="bi bi-check2-square"></i> จองคิว</a
+                  >
+                  {% endif %}
+                  {% endfor %}
+                </div> -->
+                <script>
+                  let sumcheck = 0;
+                </script>
+
+                <div class="d-grid gap-2" id='booking'>
+                  
+                  {%for qt in typeque%}
+                    {% if qt.name_type_que == 'แบบล่วงหน้า'%}
+                    <script>
+                      sumcheck = sumcheck + 1;
+                    </script>
+                    {% endif %}
+                  {% endfor %}
+
+                  {% for u in typeuser %}
+                    {% if u.name_type_user == user_ty.name_type_user %}
+                    <script>
+                     sumcheck = sumcheck + 1;
+                     console.log(sumcheck);
+                    </script>
+                     {% endif %}
+                  {% endfor %}
+                    
+                  <script type="text/javascript">
+                  if (sumcheck > 1){
+                    document.getElementById('booking').style.visibility = "visible";
+                  }
+                  else{
+                    document.getElementById('booking').style.visibility = "hidden";
+                    swal("ท่านไม่สามารถจองคิวนี้ได้ เนื่องจากเงื่อนไขของคิวนี้จำกัด")
+                   
+                  }
+                  
+                  </script>      
+
+                  <a 
+                    class="btn btn-lg btn-block" 
+                    href="{% url 'create_booking' id=info.id %}"
+                    ><i class="bi bi-check2-square"></i> จองคิว</a>
+                 
+
+
                 </div>
+              
+
+
+
+                
               </td>
             </tr>
           </tbody>

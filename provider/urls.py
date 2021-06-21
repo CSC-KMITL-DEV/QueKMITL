@@ -5,6 +5,7 @@ from . import views
 
 
 urlpatterns = [
+    path('show_que', views.show_que, name='show_que'),
     path('department', views.department, name='department'),
     path('department/create_dep', views.create_dep, name='create_dep'),
     path('department/<int:id>/type_in_dep/', views.type_in_dep, name='type_in_dep'),

@@ -1,0 +1,77 @@
+{% extends "provider_base.html" %} {% load static %} {% block content %}
+<br />
+<h1>ลำดับคิว</h1>
+<hr />
+<br />
+<center>
+
+
+<div class="row">
+
+<div class="col-sm-6 md-3">
+        <div class="list-group">
+          <div id="boxque" class="list-group-item list-group-item-action">
+           <h2><b>คิวบริการ</b></h2>
+           <hr>
+           {% for q in book_que %}
+           <br>
+            <div class="row">  
+              <div class="col-sm md-3">
+                <h2>{{q.que_id.prefix}}{{q.id}}</h2>
+            </div>
+                <div class="col-sm md-3">
+                    <h2>{{q.que_id.name_que}}</h2>
+                    </div>        
+            </div>
+            <br>
+             {% endfor %}  
+
+           {% for w in walkin %}
+           <br>
+            <div class="row">  
+              <div class="col-sm md-3">
+                <h2>{{w.que_id.prefix}}00{{w.id}}</h2>
+            </div>
+                <div class="col-sm md-3">
+                    <h2>{{w.que_id.name_que}}</h2>
+                    </div>        
+            </div>
+            <br>
+             {% endfor %}  
+             
+        </div>
+
+    </div>
+</div>
+
+<div class="col-sm-6 md-3">
+    <div class="list-group">
+      <div id="boxque" class="list-group-item list-group-item-action">
+       <h2><b>คิวรอรับบริการ</b></h2>
+       <hr>
+       
+            {% for bw in book_wait%}
+       <br>
+        <div class="row">  
+          <div class="col-sm md-3">
+            <h2>{{bw.que_id.name_que}}</h2>
+        </div>
+            <div class="col-sm md-3">
+                <h2>{{bw.count}}</h2>
+                </div>        
+        </div>
+        <br>
+            {% endfor %}  
+    </div>
+
+</div>
+</div>
+
+
+
+
+</div>
+<br>
+
+</center>
+{% endblock %}

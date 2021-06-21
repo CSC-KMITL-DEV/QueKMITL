@@ -1,0 +1,64 @@
+{% extends "user_base.html" %} {% load static %} {% block content %}
+
+<h1>ประวัติการใช้งาน</h1>
+<hr />
+<br />
+
+<div class="container-fluid">
+<div class="row">
+
+    {% for h in history%}
+
+  <div class="col-sm-4 md-3">
+    <center>
+
+        <table class="table table-light table-bordered " style=" font-size: 16px ;">
+          <thead>
+            <tr>
+              <th colspan="2" style="text-align: center;">{{h.que_id.name_que}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>ลำดับคิว</b></td>
+              <td>{{h.que_id.prefix}}{{h.id}}</td>
+            </tr>
+
+            <tr>
+              <td><b>หน่วยงาน</b></td>
+              <td>{{h.que_id.type_in_dep_id.dep_id.name_dep}}</td>
+            </tr>
+
+            <tr>
+              <td><b>ประเภทบริการ</b></td>
+              <td>{{h.que_id.type_in_dep_id.name_que_dep}}</td>
+            </tr>
+
+            <tr>
+              <td><b>เบอร์โทรศัพท์</b></td>
+              <td>{{h.phone}}</td>
+            </tr>
+
+            <tr>
+              <td><b>วันที่</b></td>
+              <td>{{h.que_id.date_start}} ถึง {{h.que_id.date_end}}</td>
+            </tr>
+           
+            <tr>
+              <td><b>เวลา</b></td>
+              <td>{{h.que_id.time_start}} ถึง {{h.que_id.time_end}}</td>
+            </tr>
+
+    
+          </tbody>
+        </table>
+    </center>
+  </div>
+
+{%endfor%}
+
+</div>
+</div>
+
+
+{% endblock %}

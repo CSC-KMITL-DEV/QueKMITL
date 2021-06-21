@@ -456,3 +456,26 @@ def create_walkin(request,id):
         'typeu' : typeu,     
         }
     return render(request, template_name='create_walkin.html', context=context)
+
+
+
+
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def show_que(request):
+    book_que = Que_booking.objects.filter(status=5)
+    walkin = Que_walkin.objects.filter(status=3)
+    book_wait = Que_booking.objects.filter(status=1)
+    walk_wait = Que_walkin.objects.filter(status=1)
+
+    que = QueInfo.objects.all()
+
+    context = {
+        'book_que' : book_que,
+        'walkin' : walkin,
+        'book_wait' : book_wait,
+        'walk_wait' : walk_wait,
+        'que' : que,
+        }
+    return render(request, template_name='show_que.html', context=context)
+

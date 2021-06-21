@@ -24,7 +24,6 @@ function closeShow() {
 
 <hr />
 <br />
-<div class="row">
 
 <div class="popupShow" id="popupShow">
     <center>
@@ -122,11 +121,12 @@ function closeShow() {
 
   <br />
   <br />
-  <br />
 
+<div class="row">
 
-
-  <div class="col-sm-6 md-3 ">
+  {%for qt in typeque%}
+   {% if qt.name_type_que == 'แบบล่วงหน้า'%}
+  <div class="col-sm md-3 ">
     <h2 style="text-align: center;">คิวที่จองล่วงหน้า</h2>
     <div class="list-group" style="padding-bottom: 10px;">
 
@@ -150,19 +150,14 @@ function closeShow() {
               href="{% url 'success' id=u.id%}">
               บริการเสร็จสิ้น
             </a>
-            <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
-              href="{% url 'cancel' id=u.id%}">
-              ยกเลิกคิว
-            </a>
-            <a class="btn btn-dark col-sm-2 btn-lg btn-block" style="border-radius: 20px;"
-              href="{% url 'delete' id=u.id%}">
-              ลบคิว
-            </a>
+          
           </div>
         </center>
       </div>
       {%endfor%}
       <br>
+
+
 
       {% for bf in booking_before %}
       <div id="boxque" class="list-group-item list-group-item-action">
@@ -186,7 +181,7 @@ function closeShow() {
           <div class="d-grid gap-2 d-md-block">
 
             {% if forloop.counter == 1 %}  
-            <a class="btn btn-info col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+            <a class="btn col-sm-3 btn-lg btn-block" style="border-radius: 20px;background-color: #146EB4;color: white;"
               href="{% url 'using' id=bf.id%}">
               เข้ารับบริการ
             </a>
@@ -248,7 +243,7 @@ function closeShow() {
           <div class="d-grid gap-2 d-md-block">
 
             {% if forloop.counter == 1%}
-            <a class="btn btn-info col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
+            <a class="btn col-sm-3 btn-lg btn-block" style="border-radius: 20px;background-color: #146EB4;color: white;"
               href="{% url 'using' id=pf.id%}">
               เข้ารับบริการ
             </a>
@@ -277,49 +272,37 @@ function closeShow() {
 
  
 
+{% elif qt.name_type_que == 'Walk-in'%}
 
-  <div class="col-sm-6 md-3 ">
+  <div class="col-sm md-3 ">
     <h2 style="text-align: center;">คิว Walk-in</h2>
     <div class="list-group" style="padding-bottom: 10px;">
 
-
-<br>
       {% for uw in using_walkin %}
       <div id="boxque" class="list-group-item list-group-item-action">
         <div class="row">
           <h1 style="color: blue">{{uw.que_id.prefix}}00{{uw.id}}</h1>
-  
-          
           <h2 style="color: red; text-align: end; padding-right: 50px ">
             <b>เข้ารับบริการอยู่</b>
           </h2>
-       
-  
           <div class="col-sm">
             <h2>คุณ {{uw.name}}</h2>
             <h2>เบอร์ติดต่อ : {{uw.phone}}</h2>
           </div>
         </div>
-  
         <center>
           <div class="d-grid gap-2 d-md-block">
-          
             <a class="btn btn-success col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
             href="{% url 'success_walkin' id=uw.id%}">
             บริการเสร็จสิ้น
           </a>
-            <a class="btn btn-dark col-sm btn-lg btn-block" style="border-radius: 20px;"
-              href="{% url 'delete_walkin' id=uw.id%}">
-              ลบคิว
-            </a>
+            
           </div>
         </center>
       </div>
     </div>
     {%endfor%}
       
-
-
 
     {% for w in booking_walkin %}
     <div id="boxque" class="list-group-item list-group-item-action">
@@ -330,24 +313,25 @@ function closeShow() {
         <h2 style="color: black; text-align: end; padding-right: 50px ">
           <b>รอ {{ forloop.counter|add:time_wait_walkin|mul:info.wait_time }} นาที</b>
         </h2>
-     
-
-        <div class="col-sm">
+        <div class="col-sm col-lg">
           <h2>คุณ {{w.name}}</h2>
           <h2>เบอร์ติดต่อ : {{w.phone}}</h2>
+          <div class="invalid-feedback d-block">หากผู้จองคิวล่วงหน้าไม่ได้อยู่ ณ ที่ทำการสามารถให้คิวนี้รับบริการก่อนได้</div>
+          <br>
         </div>
+        
       </div>
 
       <center>
         <div class="d-grid gap-2 d-md-block">
           {% if forloop.counter == 1%}
-          <a class="btn btn-info col-sm btn-lg btn-block" style="border-radius: 20px;"
+          <a class="btn col-sm-5 btn-lg btn-block" style="border-radius: 20px; background-color: #146EB4;color: white;"
             href="{% url 'using_walkin' id=w.id%}">
             เข้ารับบริการ
           </a>
           {%endif%}
 
-          <a class="btn btn-dark col-sm btn-lg btn-block" style="border-radius: 20px;"
+          <a class="btn btn-dark col-sm-5 btn-lg btn-block" style="border-radius: 20px;"
             href="{% url 'delete_walkin' id=w.id%}">
             ลบคิว
           </a>
@@ -358,9 +342,9 @@ function closeShow() {
   {%endfor%}
 
   <br>
-</div>
 
 
-</div>
+{% endif %}
+{% endfor %}
 </div>
 {% endblock %}

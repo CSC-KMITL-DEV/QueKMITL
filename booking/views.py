@@ -3,11 +3,13 @@ from django.template.context_processors import request
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .models import Que_booking
+from .models import Que_booking, Que_walkin
 from user.models import User_in_type
 from provider.models import Department, QueInfo, TypeUser, Week_Day, TypeQue, Type_in_Dep
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Max
+
 # Create your views here.
 
 @login_required
@@ -76,22 +78,87 @@ def create_booking(request, id):
     info = QueInfo.objects.get(pk=id)
     current_user = request.user
     user_type = User_in_type.objects.get(user=current_user)
+    w = Que_walkin.objects.all().count()
+    qb = Que_booking.objects.all().count()
 
     if request.method == 'POST':
         if (request.POST.get('phone').isnumeric() == True) and (len(request.POST.get('phone')) == 10):
-            booking = Que_booking.objects.create(
-            user_id = current_user,
-            que_id = info,
-            user_type = user_type,
-            phone = request.POST.get('phone'),)
 
-            booking.save()
-            msg = 'Successfully'
-            context = {
-               'info' : info,
-               'msg' : msg
-                }
-            return render(request, template_name='create_booking.html', context=context)
+            if (w == 0) and (qb == 0):
+                booking = Que_booking.objects.create(
+                user_id = current_user,
+                que_id = info,
+                user_type = user_type,
+                rang = 1,
+                phone = request.POST.get('phone'),)
+
+                booking.save()
+                msg = 'Successfully'
+                context = {
+                'info' : info,
+                'msg' : msg
+                    }
+                return render(request, template_name='create_booking.html', context=context)
+
+            if (w != 0) and (qb == 0):
+                qw = Que_walkin.objects.all().aggregate(Max('rang')).get('rang__max')
+                value = qw
+                booking = Que_booking.objects.create(
+                user_id = current_user,
+                que_id = info,
+                user_type = user_type,
+                rang = value + 1,
+                phone = request.POST.get('phone'),)
+
+                booking.save()
+                msg = 'Successfully'
+                context = {
+                'info' : info,
+                'msg' : msg
+                    }
+                return render(request, template_name='create_booking.html', context=context)
+
+            if (qb != 0) and (w == 0):
+                q_b = Que_booking.objects.all().aggregate(Max('rang')).get('rang__max')
+                value = q_b
+                booking = Que_booking.objects.create(
+                user_id = current_user,
+                que_id = info,
+                user_type = user_type,
+                rang = value + 1,
+                phone = request.POST.get('phone'),)
+
+                booking.save()
+                msg = 'Successfully'
+                context = {
+                'info' : info,
+                'msg' : msg
+                    }
+                return render(request, template_name='create_booking.html', context=context)
+
+            if (qb != 0) and (w != 0):
+                q_w = Que_walkin.objects.all().aggregate(Max('rang')).get('rang__max')
+                q_b = Que_booking.objects.all().aggregate(Max('rang')).get('rang__max')
+
+                if q_b >= q_w:
+                    value = q_b
+                else:
+                    value = q_w
+
+                booking = Que_booking.objects.create(
+                user_id = current_user,
+                que_id = info,
+                user_type = user_type,
+                rang = value + 1,
+                phone = request.POST.get('phone'),)
+
+                booking.save()
+                msg = 'Successfully'
+                context = {
+                'info' : info,
+                'msg' : msg
+                    }
+                return render(request, template_name='create_booking.html', context=context)
 
         else:
             error = 'กรุณาใส่เบอร์โทรศัพท์ให้ถูกต้อง'
@@ -111,8 +178,7 @@ def create_booking(request, id):
 def my_booking(request):
     current_user = request.user
     my_list = Que_booking.objects.filter(status=1, user_id=current_user)
-    my_putoff = Que_booking.objects.filter(status=2, user_id=current_user)
-    context = {'my_list' : my_list,'my_putoff' : my_putoff}
+    context = {'my_list' : my_list}
     return render(request, template_name='my_booking.html', context=context)
 
 
@@ -121,7 +187,7 @@ def my_booking(request):
 @login_required
 def my_cancel(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 3
+    que_book.status = 2
     que_book.save()
     return redirect('my_booking')   
 
@@ -129,7 +195,15 @@ def my_cancel(request,id):
 @login_required
 def my_putoff(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 2
+    q_w = Que_walkin.objects.all().aggregate(Max('rang')).get('rang__max')
+    q_b = Que_booking.objects.all().aggregate(Max('rang')).get('rang__max')
+    
+    if q_b >= q_w:
+        value = q_b
+    else:
+        value = q_w
+
+    que_book.rang = value + 1 
     que_book.save()
     return redirect('my_booking')    
 
@@ -139,7 +213,7 @@ def my_putoff(request,id):
 @login_required
 def my_history(request):
     current_user = request.user
-    history = Que_booking.objects.filter(status=6,user_id=current_user)
+    history = Que_booking.objects.filter(status=5,user_id=current_user)
     context = {'history' : history}
 
     return render(request, template_name='my_history.html', context=context)

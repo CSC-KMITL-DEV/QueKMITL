@@ -121,12 +121,12 @@ function closeShow() {
 
   <br />
   <br />
-
+  <center>
 <div class="row">
 
   {%for qt in typeque%}
    {% if qt.name_type_que == 'แบบล่วงหน้า'%}
-  <div class="col-sm md-3 ">
+  <div class="col-sm-6 md-3 ">
     <h2 style="text-align: center;">คิวที่จองล่วงหน้า</h2>
     <div class="list-group" style="padding-bottom: 10px;">
 
@@ -169,8 +169,6 @@ function closeShow() {
             <b>รอ {{ forloop.counter|mul:info.wait_time }} นาที</b>
 
           </h2>
-        
-
           <div class="col-sm">
             <h2>คุณ {{bf.user_id.first_name}} {{bf.user_id.last_name}}</h2>
             <h2>เบอร์ติดต่อ : {{bf.phone}}</h2>
@@ -220,61 +218,16 @@ function closeShow() {
       </div>
       {%endfor%}
 
-
-
-      {% for pf in que_putoff %}
-      <div id="boxque" class="list-group-item list-group-item-action">
-        <div class="row">
-          <h1 style="color: blue">{{pf.que_id.prefix}}{{pf.id}} (เลื่อนคิว)</h1>
-
-          
-          <h2 style="color: black; text-align: end; padding-right: 50px ">
-            <b>รอ {{ forloop.counter|add:sum_bf|mul:info.wait_time }} นาที</b>
-          </h2>
-       
-
-          <div class="col-sm">
-            <h2>คุณ {{pf.user_id.first_name}} {{pf.user_id.last_name}}</h2>
-            <h2>เบอร์ติดต่อ : {{pf.phone}}</h2>
-          </div>
-        </div>
-
-        <center>
-          <div class="d-grid gap-2 d-md-block">
-
-            {% if forloop.counter == 1%}
-            <a class="btn col-sm-3 btn-lg btn-block" style="border-radius: 20px;background-color: #146EB4;color: white;"
-              href="{% url 'using' id=pf.id%}">
-              เข้ารับบริการ
-            </a>
-            {%endif%}
-
-            <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
-              href="{% url 'cancel' id=pf.id%}">
-              ยกเลิกคิว
-            </a>
-            <a class="btn btn-dark col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
-              href="{% url 'delete' id=pf.id%}">
-              ลบคิว
-            </a>
-          </div>
-        </center>
-      </div>
-    
-    {%endfor%}
     <br>
-
-
-
     </div>
 </div>
-
+{% endif %}
 
  
 
-{% elif qt.name_type_que == 'Walk-in'%}
+{% if qt.name_type_que == 'Walk-in'%}
 
-  <div class="col-sm md-3 ">
+  <div class="col-sm-6 md-3 ">
     <h2 style="text-align: center;">คิว Walk-in</h2>
     <div class="list-group" style="padding-bottom: 10px;">
 
@@ -316,7 +269,6 @@ function closeShow() {
         <div class="col-sm col-lg">
           <h2>คุณ {{w.name}}</h2>
           <h2>เบอร์ติดต่อ : {{w.phone}}</h2>
-          <div class="invalid-feedback d-block">หากผู้จองคิวล่วงหน้าไม่ได้อยู่ ณ ที่ทำการสามารถให้คิวนี้รับบริการก่อนได้</div>
           <br>
         </div>
         
@@ -346,5 +298,6 @@ function closeShow() {
 
 {% endif %}
 {% endfor %}
-</div></div>
+</div></div></div>
+</center>
 {% endblock %}

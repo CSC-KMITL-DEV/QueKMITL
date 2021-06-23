@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.template.context_processors import request
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
-from .models import User_in_type
+from .models import User_in_type, User_punish
 from django.contrib.auth import authenticate, login
 from provider.models import TypeUser
 from django.db import IntegrityError
@@ -40,12 +40,27 @@ def check_login(request):
 
 def index_page(request):
     check_user_in = User_in_type.objects.all()
+    punish = User_punish.objects.all()
     try:
+        
         if request.user.is_authenticated:
             user_id = request.user
             user_id = user_id.id
             user = User.objects.get(pk=user_id)
+            count = 0
+            for p in punish:
+                if p.user == user:
+                    count += 1
+            
+            if count == 0:
+                create = User_punish.objects.create(
+                        user = user,
+                    )
+                create.save()
+            else:
+                create = User_punish.objects.none()
 
+                
             if user not in check_user_in:
                 email = user.email
                 username = email.split('@')[0]
@@ -73,8 +88,7 @@ def index_page(request):
                     create.save()
                 return render(request, template_name='index.html')
 
-        else:
-            return render(request, template_name='index.html')
+
     except IntegrityError as e:
         user_info = User_in_type.objects.get(user=user)
 

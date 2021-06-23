@@ -25,12 +25,7 @@
             <td><b>คิวแบบล่วงหน้า</b></td>
             <td><b>{{count_bf}}</b></td>
         </tr>
-        <tr>
-            <td><p id="number" style="background-color: orangered;"></p></td>
-            <td><b>คิวแบบล่วงหน้า (เลื่อนคิว)</b></td>
-            <td><b>{{count_bp}}</b></td>
-
-        </tr>
+       
 
         <tr>
             <td><p id="number" style="background-color: blue;"></p></td>
@@ -67,6 +62,11 @@
                     <p class="mb-1">อีเมล : <b>{{bf.user_id.email}}</b></p>
                     <p class="mb-1">เบอร์โทรศัพท์ : <b>{{bf.phone}}</b></p>
                     <p class="mb-1">ประเภทบุคคล : <b>{{bf.user_type.user_type}}</b></p>
+                    {% for p in punish %}
+                    {% if p.user == bf.user_id %}
+                        <p class="mb-1">จำนวนครั้งที่ได้รับโทษ : <b>{{p.punish}}</b></p>
+                    {% endif %}
+                    {%endfor%}
                   </div>
 
             
@@ -79,36 +79,6 @@
 {%endfor%}
 
 
-    {% for bp in booking_putoff %}
-        <div class="list-group" style="padding-bottom: 10px;">
-            <div id="boxque" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-sm-1 md-3">
-                <p id="number" style="background-color: orangered;">{{forloop.counter}}</p>
-            </div>
-            <div class="col-sm-4 md-3">
-                <h2>{{bp.que_id.prefix}}{{bp.id}}</h2>
-            </div>
-
-            <div class="col-sm-2 md-3">
-                <img src="{% static "icon/user.png" %}" width="60px" height="auto"/>
-            </div>
-            
-                <div class="col-sm md-3">
-                    <p class="mb-1">ชื่อ : <b>{{bp.user_id.first_name}} {{bp.user_id.last_name}}</b></p>
-                    <p class="mb-1">อีเมล : <b>{{bp.user_id.email}}</b></p>
-                    <p class="mb-1">เบอร์โทรศัพท์ : <b>{{bp.phone}}</b></p>
-                    <p class="mb-1">ประเภทบุคคล : <b>{{bp.user_type.user_type}}</b></p>
-                  </div>
-
-            
-        </div>
-</div>
-</div>
-
-
-
-{%endfor%}
 
     {% for w in walkin_que %}
   

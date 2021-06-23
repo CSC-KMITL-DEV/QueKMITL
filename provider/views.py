@@ -3,10 +3,13 @@ from django.shortcuts import redirect, render
 from django.template.context_processors import request
 from .models import Department, QueInfo, TypeUser, Week_Day, TypeQue, Type_in_Dep
 from booking.models import Que_booking, Que_walkin
+from user.models import User_punish
 from string import punctuation
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Max
+
 
 # Create your views here.
 @login_required
@@ -290,12 +293,10 @@ def info_que(request, id):
     typeque = info.type_que.all()
     typeuser = info.type_user.all()
     using_status = Que_booking.objects.filter(que_id=id,status=5)
-    booking_before = Que_booking.objects.filter(que_id=id,status=1)
+    booking_before = Que_booking.objects.filter(que_id=id,status=1).order_by('rang')
     sum_bf = booking_before.count()
-    que_putoff = Que_booking.objects.filter(que_id=id,status=2)
-    sum_qp = que_putoff.count()
-    time_wait_walkin = sum_bf + sum_qp
-    booking_walkin = Que_walkin.objects.filter(que_id=id,status=1)
+    time_wait_walkin = sum_bf
+    booking_walkin = Que_walkin.objects.filter(que_id=id,status=1).order_by('rang')
     using_walkin = Que_walkin.objects.filter(que_id=id,status=3)
     context = {
         'info' : info,
@@ -304,7 +305,6 @@ def info_que(request, id):
         'typeuser' : typeuser,  
         'booking_before' : booking_before,
         'booking_walkin' : booking_walkin,
-        'que_putoff' : que_putoff,
         'using_status' : using_status,
         'sum_bf' : sum_bf,
         'time_wait_walkin' : time_wait_walkin,
@@ -327,7 +327,7 @@ def close_que(request, id):
 @login_required
 def success(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 6
+    que_book.status = 5
     que_book.save()
 
     return redirect("info_que", id=que_book.que_id.id)
@@ -336,7 +336,7 @@ def success(request,id):
 @login_required
 def using(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 5
+    que_book.status = 4
     que_book.save()
     return redirect('info_que', id=que_book.que_id.id)
 
@@ -345,7 +345,15 @@ def using(request,id):
 @login_required
 def putoff(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 2
+    q_w = Que_walkin.objects.all().aggregate(Max('rang')).get('rang__max')
+    q_b = Que_booking.objects.all().aggregate(Max('rang')).get('rang__max')
+    
+    if q_b >= q_w:
+        value = q_b
+    else:
+        value = q_w
+
+    que_book.rang = value + 1 
     que_book.save()
     return redirect('info_que', id=que_book.que_id.id)    
     
@@ -354,7 +362,7 @@ def putoff(request,id):
 @login_required
 def delete(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 4
+    que_book.status = 3
     que_book.save()
     return redirect('info_que', id=que_book.que_id.id)    
     
@@ -364,8 +372,11 @@ def delete(request,id):
 @login_required
 def cancel(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 3
+    que_book.status = 2
     que_book.save()
+    punish = User_punish.objects.get(user=que_book.user_id)
+    punish.punish += 1
+    punish.save()
     return redirect('info_que', id=que_book.que_id.id)    
 
 
@@ -407,6 +418,7 @@ def userbook(request,id):
     count_bf = booking_before.count()
     count_bp = booking_putoff.count()
     count_w = walkin_que.count()
+    punish = User_punish.objects.all()
     context = {
         'info' : info,
         'booking_before' : booking_before,
@@ -414,7 +426,8 @@ def userbook(request,id):
         'walkin_que' : walkin_que,
         'count_bf' : count_bf,
         'count_bp' : count_bp,
-        'count_w' : count_w
+        'count_w' : count_w,
+        'punish' : punish
         }
     return render(request, template_name='userbook_queinfo.html', context=context)
 
@@ -424,23 +437,86 @@ def userbook(request,id):
 def create_walkin(request,id):
     info = QueInfo.objects.get(pk=id)
     typeu = info.type_user.all()
+    w = Que_walkin.objects.all().count()
+    qb = Que_booking.objects.all().count()
     if request.method == 'POST':
         if (request.POST.get('phone').isnumeric() == True) and (len(request.POST.get('phone')) == 10):
             
-            que_walkin = Que_walkin.objects.create(
-            name = request.POST.get('username'),
-            user_type_id = request.POST.get('types_id'),
-            phone = request.POST.get('phone'),
-            que_id = info,)
+            if (w == 0) and (qb == 0):
+                que_walkin = Que_walkin.objects.create(
+                name = request.POST.get('username'),
+                user_type_id = request.POST.get('types_id'),
+                phone = request.POST.get('phone'),
+                rang = 1,
+                que_id = info,)
+                que_walkin.save()
+                msg = 'Successfully'
+                context = {
+                'msg' : msg,
+                'info' : info,
+                'typeu' : typeu,
+                }
+                return render(request, template_name='create_walkin.html', context=context)
 
-            que_walkin.save()
-            msg = 'Successfully'
-            context = {
-            'msg' : msg,
-            'info' : info,
-            'typeu' : typeu,
-            }
-            return render(request, template_name='create_walkin.html', context=context)
+            if (w != 0) and (qb == 0):
+                qw = Que_walkin.objects.aggregate(Max('rang')).get('rang__max')
+                value = qw
+                que_walkin = Que_walkin.objects.create(
+                name = request.POST.get('username'),
+                user_type_id = request.POST.get('types_id'),
+                phone = request.POST.get('phone'),
+                rang = value + 1,
+                que_id = info,)
+                que_walkin.save()
+                msg = 'Successfully'
+                context = {
+                'msg' : msg,
+                'info' : info,
+                'typeu' : typeu,
+                }
+                return render(request, template_name='create_walkin.html', context=context)   
+
+            if (qb != 0) and (w == 0):
+                q = Que_booking.objects.aggregate(Max('rang')).get('rang__max')
+                value = q
+                que_walkin = Que_walkin.objects.create(
+                name = request.POST.get('username'),
+                user_type_id = request.POST.get('types_id'),
+                phone = request.POST.get('phone'),
+                rang = value + 1,
+                que_id = info,)
+                que_walkin.save()
+                msg = 'Successfully'
+                context = {
+                'msg' : msg,
+                'info' : info,
+                'typeu' : typeu,
+                }
+                return render(request, template_name='create_walkin.html', context=context)               
+                        
+            if (qb != 0) and (w != 0):
+                q_w = Que_walkin.objects.all().aggregate(Max('rang')).get('rang__max')
+                q_b = Que_booking.objects.all().aggregate(Max('rang')).get('rang__max')
+
+                if q_b >= q_w:
+                    value = q_b
+                else:
+                    value = q_w
+
+                que_walkin = Que_walkin.objects.create(
+                name = request.POST.get('username'),
+                user_type_id = request.POST.get('types_id'),
+                phone = request.POST.get('phone'),
+                rang = value + 1,
+                que_id = info,)
+                que_walkin.save()
+                msg = 'Successfully'
+                context = {
+                'msg' : msg,
+                'info' : info,
+                'typeu' : typeu,
+                }
+                return render(request, template_name='create_walkin.html', context=context)
         else:
             error = 'กรุณาใส่เบอร์โทรศัพท์ให้ถูกต้อง'
             context = {
@@ -470,13 +546,18 @@ def show_que(request):
 
     que = QueInfo.objects.all()
     thisdict =	{}
+    count = 0
     for i in que:
         for j in book_wait:
-            if j.que_id.id == i.id:
-                count = Que_booking.objects.filter(que_id=i.id,status=1).count()
-                count += Que_booking.objects.filter(que_id=i.id,status=2).count()
-                count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
-                thisdict[i.name_que] = count
+            for k in walk_wait:
+                if j.que_id.id == i.id or k.que_id.id == i.id:
+                    count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+                    count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                    thisdict[i.name_que] = count
+             
+
+                
+    
 
 
     context = {
@@ -485,7 +566,7 @@ def show_que(request):
         'book_wait' : book_wait,
         'walk_wait' : walk_wait,
         'que' : que,
-        'thisdict' : thisdict
+        'thisdict' : thisdict,
         }
     return render(request, template_name='show_que.html', context=context)
 

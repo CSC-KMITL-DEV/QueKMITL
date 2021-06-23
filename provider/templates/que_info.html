@@ -124,12 +124,46 @@ function closeShow() {
   <center>
 <div class="row">
 
-  {%for qt in typeque%}
-   {% if qt.name_type_que == 'แบบล่วงหน้า'%}
+
   <div class="col-sm-6 md-3 ">
-    <h2 style="text-align: center;">คิวที่จองล่วงหน้า</h2>
     <div class="list-group" style="padding-bottom: 10px;">
 
+
+{% for i in list_que %}
+
+{{i}}/
+
+ {%endfor%}
+<br>
+      
+    {% for i in list_que %}
+      {% for bf in booking_before %}
+        {% for bw in booking_walkin %}
+          
+
+
+          {{i}}__
+          {% if i == bf.rang %}
+            {{bf.user_id.first_name}} {{bf.user_id.last_name}}
+
+            
+          {% elif bw.rang == i %}
+            {{bw.name}}
+          {%endif%}
+          
+
+
+      {%endfor%}
+  {%endfor%}
+ {%endfor%}
+
+
+
+
+
+
+
+<!-- 
       {% for u in using_status %}
       <div id="boxque" class="list-group-item list-group-item-action" >
         <div class="row">
@@ -221,11 +255,11 @@ function closeShow() {
     <br>
     </div>
 </div>
-{% endif %}
+
 
  
 
-{% if qt.name_type_que == 'Walk-in'%}
+
 
   <div class="col-sm-6 md-3 ">
     <h2 style="text-align: center;">คิว Walk-in</h2>
@@ -291,13 +325,10 @@ function closeShow() {
       </center>
     </div>
   </div>
-  {%endfor%}
+  {%endfor%} -->
 
   <br>
 
-
-{% endif %}
-{% endfor %}
 </div></div></div>
 </center>
 {% endblock %}

@@ -120,8 +120,16 @@
           </ul>
 
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <div class="d-grid gap-2">
+            
               {% if user.is_authenticated %}
+              <li class="nav-item" >
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  style="color: orangered;"><b>Date : {% now "D d M , Y "%}</b></a
+                >
+              </li>   
+                <div class="d-grid gap-2">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle btn-light my-2 my-sm-0 btn-lg btn-block" href="" style="color: orangered; background-color: white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   {{ user.first_name }} {{ user.last_name }} 

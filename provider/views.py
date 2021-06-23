@@ -292,12 +292,19 @@ def info_que(request, id):
     day = info.day_open.all()
     typeque = info.type_que.all()
     typeuser = info.type_user.all()
-    using_status = Que_booking.objects.filter(que_id=id,status=5)
-    booking_before = Que_booking.objects.filter(que_id=id,status=1).order_by('rang')
+    using_status = Que_booking.objects.filter(que_id=id,status=4)
+    using_walkin = Que_walkin.objects.filter(que_id=id,status=3)
+    booking_before = Que_booking.objects.filter(que_id=id,status=1)
     sum_bf = booking_before.count()
     time_wait_walkin = sum_bf
-    booking_walkin = Que_walkin.objects.filter(que_id=id,status=1).order_by('rang')
-    using_walkin = Que_walkin.objects.filter(que_id=id,status=3)
+    booking_walkin = Que_walkin.objects.filter(que_id=id,status=1)
+
+    list_que = []
+    for j in booking_before:
+        list_que.append(j.rang)
+    for k in booking_walkin:
+        list_que.append(k.rang)
+    list_que = sorted(list_que)
     context = {
         'info' : info,
         'day' : day,
@@ -309,6 +316,7 @@ def info_que(request, id):
         'sum_bf' : sum_bf,
         'time_wait_walkin' : time_wait_walkin,
         'using_walkin' : using_walkin,
+        'list_que' : list_que
         }
     return render(request, template_name='que_info.html', context=context)
 
@@ -413,19 +421,15 @@ def delete_walkin(request,id):
 def userbook(request,id):
     info = QueInfo.objects.get(pk=id)
     booking_before = Que_booking.objects.filter(que_id=id,status=1)
-    booking_putoff = Que_booking.objects.filter(que_id=id,status=2)
     walkin_que = Que_walkin.objects.filter(que_id=id,status=1)
     count_bf = booking_before.count()
-    count_bp = booking_putoff.count()
     count_w = walkin_que.count()
     punish = User_punish.objects.all()
     context = {
         'info' : info,
         'booking_before' : booking_before,
-        'booking_putoff' : booking_putoff,
         'walkin_que' : walkin_que,
         'count_bf' : count_bf,
-        'count_bp' : count_bp,
         'count_w' : count_w,
         'punish' : punish
         }
@@ -534,31 +538,46 @@ def create_walkin(request,id):
     return render(request, template_name='create_walkin.html', context=context)
 
 
+@user_passes_test(lambda s: s.is_staff)
+@login_required
+def show_que(request):
 
+    dep_all = Department.objects.all()
+    context = {
+        'dep_all' : dep_all
+    }
+    return render(request, template_name='showque_dep.html', context=context)
 
 @user_passes_test(lambda s: s.is_staff)
 @login_required
 def show_que(request):
-    book_que = Que_booking.objects.filter(status=5)
+    book_que = Que_booking.objects.filter(status=4)
     walkin = Que_walkin.objects.filter(status=3)
     book_wait = Que_booking.objects.filter(status=1)
     walk_wait = Que_walkin.objects.filter(status=1)
 
     que = QueInfo.objects.all()
     thisdict =	{}
-    count = 0
+    
     for i in que:
         for j in book_wait:
-            for k in walk_wait:
-                if j.que_id.id == i.id or k.que_id.id == i.id:
-                    count = Que_booking.objects.filter(que_id=i.id,status=1).count()
-                    count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
-                    thisdict[i.name_que] = count
-             
 
-                
+            if j.que_id.id == i.id:
+                count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+                count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                txt = str(i.name_que) + " " + "(" + str(i.prefix) + ")"
+                thisdict[txt] = count
+                count = 0
+        for k in walk_wait:
+            if  k.que_id.id == i.id:
+                count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+                count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                txt = str(i.name_que) + " " + "(" + str(i.prefix) + ")"
+                thisdict[txt] = count
+                count = 0
     
-
+ 
+            
 
     context = {
         'book_que' : book_que,
@@ -569,4 +588,3 @@ def show_que(request):
         'thisdict' : thisdict,
         }
     return render(request, template_name='show_que.html', context=context)
-

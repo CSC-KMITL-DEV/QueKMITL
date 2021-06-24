@@ -49,11 +49,134 @@
               <td>{{h.que_id.time_start}} ถึง {{h.que_id.time_end}}</td>
             </tr>
 
+            <tr>
+              <td colspan="2">
+                <div class="d-grid gap-2"><button class="btn btn-block btn-success">บริการคิวสำเร็จ</button>
+                </div></td>
+            </tr>
+
     
           </tbody>
         </table>
     </center>
   </div>
+
+{%endfor%}
+
+
+
+{% for c in history_cel%}
+
+<div class="col-sm-4 md-3">
+  <center>
+
+      <table class="table table-light table-bordered " style=" font-size: 16px ;">
+        <thead>
+          <tr>
+            <th colspan="2" style="text-align: center;">{{h.que_id.name_que}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>ลำดับคิว</b></td>
+            <td>{{c.que_id.prefix}}{{c.id}}</td>
+          </tr>
+
+          <tr>
+            <td><b>หน่วยงาน</b></td>
+            <td>{{c.que_id.type_in_dep_id.dep_id.name_dep}}</td>
+          </tr>
+
+          <tr>
+            <td><b>ประเภทบริการ</b></td>
+            <td>{{c.que_id.type_in_dep_id.name_que_dep}}</td>
+          </tr>
+
+          <tr>
+            <td><b>เบอร์โทรศัพท์</b></td>
+            <td>{{c.phone}}</td>
+          </tr>
+
+          <tr>
+            <td><b>วันที่</b></td>
+            <td>{{c.que_id.date_start}} ถึง {{c.que_id.date_end}}</td>
+          </tr>
+         
+          <tr>
+            <td><b>เวลา</b></td>
+            <td>{{c.que_id.time_start}} ถึง {{c.que_id.time_end}}</td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <div class="d-grid gap-2">
+
+              <button class="btn btn-block btn-danger">คิวนี้ถูกยกเลิก</button>
+            </div></td>
+          </tr>
+  
+        </tbody>
+      </table>
+  </center>
+</div>
+
+{%endfor%}
+
+
+{% for d in history_del%}
+
+<div class="col-sm-4 md-3">
+  <center>
+
+      <table class="table table-light table-bordered " style=" font-size: 16px ;">
+        <thead>
+          <tr>
+            <th colspan="2" style="text-align: center;">{{d.que_id.name_que}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>ลำดับคิว</b></td>
+            <td>{{d.que_id.prefix}}{{d.id}}</td>
+          </tr>
+
+          <tr>
+            <td><b>หน่วยงาน</b></td>
+            <td>{{d.que_id.type_in_dep_id.dep_id.name_dep}}</td>
+          </tr>
+
+          <tr>
+            <td><b>ประเภทบริการ</b></td>
+            <td>{{d.que_id.type_in_dep_id.name_que_dep}}</td>
+          </tr>
+
+          <tr>
+            <td><b>เบอร์โทรศัพท์</b></td>
+            <td>{{d.phone}}</td>
+          </tr>
+
+          <tr>
+            <td><b>วันที่</b></td>
+            <td>{{d.que_id.date_start}} ถึง {{d.que_id.date_end}}</td>
+          </tr>
+         
+          <tr>
+            <td><b>เวลา</b></td>
+            <td>{{d.que_id.time_start}} ถึง {{d.que_id.time_end}}</td>
+          </tr>
+          <tr>
+            
+            <td colspan="2">
+              <div class="d-grid gap-2">
+              <button class="btn-block btn-lg btn-dark">คิวถูกลบ</button></td>
+            </div>
+          </tr>
+
+  
+        </tbody>
+      </table>
+  </center>
+</div>
 
 {%endfor%}
 

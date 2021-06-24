@@ -178,7 +178,31 @@ def create_booking(request, id):
 def my_booking(request):
     current_user = request.user
     my_list = Que_booking.objects.filter(status=1, user_id=current_user)
-    context = {'my_list' : my_list}
+    que = QueInfo.objects.all()
+    book_wait = Que_booking.objects.filter(status=1)
+    walk_wait = Que_walkin.objects.filter(status=1)
+    thisdict = {}
+    for i in que:
+            for j in book_wait:
+
+                if j.que_id.id == i.id:
+                    count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+                    count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                    txt = i.id
+                    thisdict[txt] = count
+                    count = 0
+    
+            for k in walk_wait:
+                if  k.que_id.id == i.id:
+                    count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+                    count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                    txt = i.id
+                    thisdict[txt] = count
+                    count = 0
+    
+
+
+    context = {'my_list' : my_list, 'thisdict': thisdict}
     return render(request, template_name='my_booking.html', context=context)
 
 
@@ -187,7 +211,7 @@ def my_booking(request):
 @login_required
 def my_cancel(request,id):
     que_book = Que_booking.objects.get(pk=id)
-    que_book.status = 2
+    que_book.status = 3
     que_book.save()
     return redirect('my_booking')   
 
@@ -214,7 +238,9 @@ def my_putoff(request,id):
 def my_history(request):
     current_user = request.user
     history = Que_booking.objects.filter(status=5,user_id=current_user)
-    context = {'history' : history}
+    history_cel = Que_booking.objects.filter(status=2,user_id=current_user)
+    history_del = Que_booking.objects.filter(status=3,user_id=current_user)
+    context = {'history' : history, 'history_cel' : history_cel, 'history_del':history_del}
 
     return render(request, template_name='my_history.html', context=context)
    

@@ -1,5 +1,6 @@
 {% extends "user_base.html" %} {% load static %} {% block content %}
 
+  
 <h1>คิวของฉัน</h1>
 <hr />
 <br />
@@ -7,7 +8,6 @@
 <div class="container-fluid">
 <div class="row">
 {% for q in my_list%}
-
   <div class="col-sm-4 md-3">
     <center>
 
@@ -51,6 +51,16 @@
               <td><b>กรุณามาก่อนเวลานัด</b></td>
               <td>{{q.que_id.wait_time}} นาที</td>
             </tr>
+     
+            {% for key,value in thisdict.items %}
+              {% if key == q.que_id.id %}
+              
+                <tr>
+                <td><b>จำนวนคิว</b></td>
+                <td>{{ value }}</td>
+              </tr>
+              {%endif%}
+            {%endfor%}
 
             <tr>
               <td>
@@ -62,7 +72,7 @@
               </td>
               <td>
                 <div class="d-grid gap-2"><a class="btn btn-danger btn-lg btn-block" href="{% url 'my_cancel' id=q.id%}">
-                    ยกเลิกคิว
+                    ลบคิว
                   </a></div>
               </td>
             </tr>
@@ -73,54 +83,6 @@
 
 {%endfor%}
 
-
-{% for pf in my_putoff%}
-
-  <div class="col-sm-3 md-3">
-    <center>
-
-        <table class="table table-light table-bordered " style=" font-size: 16px ;">
-          <thead>
-            <tr>
-              <th colspan="2" style="text-align: center;">{{pf.que_id.name_que}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><b>ลำดับคิว</b></td>
-              <td>{{pf.que_id.prefix}}{{pf.id}}</td>
-            </tr>
-            <tr>
-              <td><b>หน่วยงาน</b></td>
-              <td>{{pf.que_id.type_in_dep_id.dep_id.name_dep}}</td>
-            </tr>
-
-            <tr>
-              <td><b>ประเภทบริการ</b></td>
-              <td>{{pf.que_id.type_in_dep_id.name_que_dep}}</td>
-            </tr>
-            <tr>
-              <td><b>เบอร์โทรศัพท์</b></td>
-              <td>{{pf.phone}}</td>
-            </tr>
-            <tr>
-              <td><b>กรุณามาก่อนเวลานัด</b></td>
-              <td>{{pf.que_id.wait_time}} นาที</td>
-            </tr>
-
-            <tr>
-              <td colspan="2">
-                <div class="d-grid gap-2"><a class="btn btn-danger btn-lg btn-block" href="{% url 'my_cancel' id=pf.id%}">
-                    ยกเลิกคิว
-                  </a></div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-    </center>
-  </div>
-
-{%endfor%}
 </div>
 </div>
 

@@ -292,13 +292,12 @@ def info_que(request, id):
     day = info.day_open.all()
     typeque = info.type_que.all()
     typeuser = info.type_user.all()
-    using_status = Que_booking.objects.filter(que_id=id,status=4)
+    using_booking = Que_booking.objects.filter(que_id=id,status=4)
     using_walkin = Que_walkin.objects.filter(que_id=id,status=3)
     booking_before = Que_booking.objects.filter(que_id=id,status=1)
-    sum_bf = booking_before.count()
-    time_wait_walkin = sum_bf
     booking_walkin = Que_walkin.objects.filter(que_id=id,status=1)
-
+    sum_use = booking_before.count() + booking_walkin.count()
+    sum_use = range(1,sum_use+1)
     list_que = []
     for j in booking_before:
         list_que.append(j.rang)
@@ -312,9 +311,8 @@ def info_que(request, id):
         'typeuser' : typeuser,  
         'booking_before' : booking_before,
         'booking_walkin' : booking_walkin,
-        'using_status' : using_status,
-        'sum_bf' : sum_bf,
-        'time_wait_walkin' : time_wait_walkin,
+        'using_booking' : using_booking,
+        'sum_use' : sum_use,
         'using_walkin' : using_walkin,
         'list_que' : list_que
         }

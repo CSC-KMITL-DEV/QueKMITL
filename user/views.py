@@ -105,9 +105,11 @@ def logout_page(request):
 def profile(request, id):
     user = User.objects.get(pk=id)
     user_info = User_in_type.objects.get(user=user)
+    user_punish = User_punish.objects.get(user=user)
     context = {
         'user_info': user_info,
-        'user' : user
+        'user' : user,
+        'user_punish' : user_punish
     }  
        
 

@@ -17,13 +17,13 @@ function closeShow() {
   class="btn col-sm-2 btn-lg"  id="popup" onclick="openShow()"
   style="background-color: lightskyblue;border: black;border-style: solid; position: relative; float: right; margin-left: -50%"
 >
-รายละเอียดคิว
+<i class="bi bi-journal"></i> รายละเอียดคิว
 </button>
 
 <h1>จัดลำดับคิว : {{info.name_que}} ({{info.prefix}})</h1>
 
 <hr />
-<br />
+
 
 <div class="popupShow" id="popupShow">
     <center>
@@ -132,27 +132,26 @@ function closeShow() {
             {% for u in using_booking %}
             <div class="list-group-item list-group-item-action" >
               <div class="row">
-                <h1 style="color: blue">{{u.que_id.prefix}}{{u.id}}</h1>
+                <h2 style="color: blue">{{u.que_id.prefix}}{{u.id}}</h2>
       
                 <h2 style="color: red; text-align: end; padding-right: 50px ">
                   <b>เข้ารับบริการอยู่</b>
                 </h2>
                 <div class="col-sm">
-                  <h2>คุณ {{u.user_id.first_name}} {{u.user_id.last_name}}</h2>
-                  <h2>เบอร์ติดต่อ : {{u.phone}}</h2>
+                  <h3>คุณ {{u.user_id.first_name}} {{u.user_id.last_name}}</h3>
+                  <h3>เบอร์ติดต่อ : {{u.phone}}</h3>
                 </div>
               </div>
-      
-              <center>
+
                 <div class="d-grid gap-2 d-md-block">
-                  <a class="btn btn-success col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
+                  <a class="btn btn-success col-sm-4 btn-lg btn-block" 
                     href="{% url 'success' id=u.id%}">
-                    บริการเสร็จสิ้น
+                    <i class="bi bi-person-check-fill"></i> บริการเสร็จสิ้น
                   </a>
                 
                 </div>
                 <hr>
-              </center> 
+             
             </div>
            
             {%endfor%}
@@ -162,25 +161,25 @@ function closeShow() {
             {% for uw in using_walkin %}
               <div>
                 <div class="row">
-                  <h1 style="color: blue">{{uw.que_id.prefix}}00{{uw.id}}</h1>
+                  <h2 style="color: blue">{{uw.que_id.prefix}}00{{uw.id}}</h2>
                   <h2 style="color: red; text-align: end; padding-right: 50px ">
                     <b>เข้ารับบริการอยู่</b>
                   </h2>
                   <div class="col-sm">
-                    <h2>คุณ {{uw.name}}</h2>
-                    <h2>เบอร์ติดต่อ : {{uw.phone}}</h2>
+                    <h3>คุณ {{uw.name}}</h3>
+                    <h3>เบอร์ติดต่อ : {{uw.phone}}</h3>
                   </div>
                 </div>
-                <center>
+            
                   <div class="d-grid gap-2 d-md-block">
-                    <a class="btn btn-success col-sm-4 btn-lg btn-block" style="border-radius: 20px;"
+                    <a class="btn btn-success col-sm-4 btn-lg btn-block" 
                     href="{% url 'success_walkin' id=uw.id%}">
-                    บริการเสร็จสิ้น
+                    <i class="bi bi-person-check-fill"></i> บริการเสร็จสิ้น
                   </a>
                     
                   </div>
                   <hr>
-                </center>
+               
               </div>
             {%endfor%}
               {%endif%}
@@ -194,46 +193,50 @@ function closeShow() {
         {% if i == bf.rang %}
         <div>
           <div class="row">
-            <h1 style="color: blue;">{{bf.que_id.prefix}}{{bf.id}}</h1>
+            <h2 style="color: blue;">{{bf.que_id.prefix}}{{bf.id}}</h2>
   
   
-            <h2 style="color: orangered; text-align: end; padding-right: 50px ">
+            <h3 style="color: orangered; text-align: end; padding-right: 50px ">
+              <i class="bi bi-stopwatch-fill"></i>
               <b>รอ <span id="time">{{ answer|mul:info.wait_time }}</span> นาที</b>
                {% if answer == 1 %}
               <script>document.getElementById('time').value='{{answer|mul:info.wait_time}}';</script>
                 {%endif%}
-            </h2>
+            </h3>
             <div class="col-sm">
-              <h2>คุณ {{bf.user_id.first_name}} {{bf.user_id.last_name}}</h2>
-              <h2>เบอร์ติดต่อ : {{bf.phone}}</h2>
+              <h3>คุณ {{bf.user_id.first_name}} {{bf.user_id.last_name}}</h3>
+              <h3>เบอร์ติดต่อ : {{bf.phone}}</h3>
             </div>
           </div>
   
-          <center>
+         
             <div class="d-grid gap-2 d-md-block">
   
               
-              <a class="btn col-sm-3 btn-lg btn-block" style="border-radius: 20px;background-color: #146EB4;color: white;"
+              <a class="btn col-sm-2 btn-lg btn-block" style="background-color: #146EB4;color: white;"
                 href="{% url 'using' id=bf.id%}">
-                เข้ารับบริการ
+                <i class="bi bi-check-square-fill"></i> เข้ารับบริการ
               </a>
               
-              <a class="btn btn-warning col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              <a class="btn btn-warning col-sm-2 btn-lg btn-block" 
                 href="{% url 'putoff' id=bf.id%}">
+                <i class="bi bi-arrow-down-short"></i>
                 เลื่อนคิว </a>
             
-              <a class="btn btn-danger col-sm-3 btn-lg btn-block" style="border-radius: 20px;"
+              <a class="btn btn-danger col-sm-2 btn-lg btn-block"
                 href="{% url 'cancel' id=bf.id%}">
+                <i class="bi bi-x-square-fill"></i>
                 ยกเลิกคิว
               </a>
-              <a class="btn btn-dark col-sm-2 btn-lg btn-block" style="border-radius: 20px;"
+              <a class="btn btn-dark col-sm-2 btn-lg btn-block" 
                 href="{% url 'delete' id=bf.id%}">
+                <i class="bi bi-person-x-fill"></i>
                 ลบคิว
               </a>
   
               </div>
             <hr>
-          </center>
+          
         </div>
         {%endif%}
         {%endfor%}
@@ -245,38 +248,40 @@ function closeShow() {
         <div>
           <div class="row">
            
-            <h1 style="color: blue">{{w.que_id.prefix}}00{{w.id}}</h1>
+            <h2 style="color: blue">{{w.que_id.prefix}}00{{w.id}}</h2>
           
             
             <h2 style="color: orangered; text-align: end; padding-right: 50px ">
+              <i class="bi bi-stopwatch-fill"></i>
              <b>รอ  <span id="time">{{ answer|mul:info.wait_time }}</span> นาที</b>
               {%if answer == 1 %}
              <script>document.getElementById('time').value='{{answer|mul:info.wait_time}}';</script>
               {%endif%}
             </h2>
             <div class="col-sm col-lg">
-              <h2>คุณ {{w.name}}</h2>
-              <h2>เบอร์ติดต่อ : {{w.phone}}</h2>
+              <h3>คุณ {{w.name}}</h3>
+              <h3>เบอร์ติดต่อ : {{w.phone}}</h3>
               <br>
             </div>
             
           </div>
     
-          <center>
+          
             <div class="d-grid gap-2 d-md-block">
              
-              <a class="btn col-sm-5 btn-lg btn-block" style="border-radius: 20px; background-color: #146EB4;color: white;"
+              <a class="btn col-sm-2 btn-lg btn-block" style="background-color: #146EB4;color: white;"
                 href="{% url 'using_walkin' id=w.id%}">
-                เข้ารับบริการ
+                <i class="bi bi-check-square-fill"></i> เข้ารับบริการ
               </a>
     
-              <a class="btn btn-dark col-sm-5 btn-lg btn-block" style="border-radius: 20px;"
+              <a class="btn btn-dark col-sm-2 btn-lg btn-block" 
                 href="{% url 'delete_walkin' id=w.id%}">
+                <i class="bi bi-person-x-fill"></i>
                 ลบคิว
               </a>
             </div>
             <hr>
-          </center>
+        
         </div>
           {%endif%}
  {%endfor%}
@@ -323,6 +328,6 @@ window.onload = async function () {
 
 </script>
 
-
+<br>
 
 {% endblock %}

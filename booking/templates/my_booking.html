@@ -1,4 +1,4 @@
-{% extends "user_base.html" %} {% load static %} {% block content %}
+{% extends "user_base.html" %} {% load static %}{% load mathfilters %} {% block content %}
 
   
 <h1>คิวของฉัน</h1>
@@ -59,8 +59,13 @@
                 <td><b>จำนวนคิวก่อนหน้า</b></td>
                 <td>{{ value }}</td>
               </tr>
+
+             
               {%endif%}
             {%endfor%}
+
+
+
 
             <tr>
               <td>

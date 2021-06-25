@@ -184,24 +184,7 @@ def my_booking(request):
     thisdict = {}
     count = 0
     for i in que:
-            # for j in book_wait:
-
-            #     if j.que_id.id == i.id:
-            #         count = Que_booking.objects.filter(que_id=i.id,status=1).count()
-            #         count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
-            #         txt = i.id
-            #         thisdict[txt] = count
-            #         count = 0
-    
-            # for k in walk_wait:
-            #     if  k.que_id.id == i.id:
-            #         count = Que_booking.objects.filter(que_id=i.id,status=1).count()
-            #         count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
-            #         txt = i.id
-            #         thisdict[txt] = count
-            #         count = 0
             for j in book_wait:
-                
                 if j.que_id.id == i.id:
                     filter_qb = Que_booking.objects.filter(que_id=i.id,status=1)
                     my_book = Que_booking.objects.filter(que_id=i.id, status=1, user_id=current_user)

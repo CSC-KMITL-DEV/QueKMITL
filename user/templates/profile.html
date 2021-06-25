@@ -20,13 +20,17 @@
                 <td><b>ชื่อ</b></td>
                 <td> <b>{{user.first_name}} {{ user.last_name }}</b></td>
               </tr>
+              <tr>
+                <td><b>Email</b></td>
+                <td> <b>{{user.email}}</b></td>
+              </tr>
           <tr>
             <td><b>ประเภทผู้ใช้</b></td>
             <td> <b>{{user_info.user_type}}</b></td>
           </tr>
           <tr>
-            <td><b>Email</b></td>
-            <td> <b>{{user.email}}</b></td>
+            <td><b>จำนวนครั้งทำโทษ</b></td>
+            <td> <b>{{user_punish.punish}}</b></td>
           </tr>
   
     </tbody>

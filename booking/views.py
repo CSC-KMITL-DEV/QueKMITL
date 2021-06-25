@@ -182,24 +182,70 @@ def my_booking(request):
     book_wait = Que_booking.objects.filter(status=1)
     walk_wait = Que_walkin.objects.filter(status=1)
     thisdict = {}
+    count = 0
     for i in que:
-            for j in book_wait:
+            # for j in book_wait:
 
+            #     if j.que_id.id == i.id:
+            #         count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+            #         count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+            #         txt = i.id
+            #         thisdict[txt] = count
+            #         count = 0
+    
+            # for k in walk_wait:
+            #     if  k.que_id.id == i.id:
+            #         count = Que_booking.objects.filter(que_id=i.id,status=1).count()
+            #         count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+            #         txt = i.id
+            #         thisdict[txt] = count
+            #         count = 0
+            for j in book_wait:
+                
                 if j.que_id.id == i.id:
-                    count = Que_booking.objects.filter(que_id=i.id,status=1).count()
-                    count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                    filter_qb = Que_booking.objects.filter(que_id=i.id,status=1)
+                    my_book = Que_booking.objects.filter(que_id=i.id, status=1, user_id=current_user)
+                    for f_qb in filter_qb:
+                        for myq in my_book:
+                            if f_qb.rang < myq.rang:
+                                count += 1
+                            else:
+                                count += 0
+
+                    filter_qw = Que_walkin.objects.filter(que_id=i.id,status=1)
+
+                    for f_qw in filter_qw:
+                        for myq in my_book:
+                            if f_qw.rang < myq.rang:
+                                count += 1
+                            else:
+                                count += 0
                     txt = i.id
                     thisdict[txt] = count
                     count = 0
-    
+        
             for k in walk_wait:
                 if  k.que_id.id == i.id:
-                    count = Que_booking.objects.filter(que_id=i.id,status=1).count()
-                    count += Que_walkin.objects.filter(que_id=i.id,status=1).count()
+                    filter_qb = Que_booking.objects.filter(que_id=i.id,status=1)
+                    my_book = Que_booking.objects.filter(que_id=i.id, status=1, user_id=current_user)
+
+                    for f_qb in filter_qb:
+                        for myq in my_book:
+                            if f_qb.rang < myq.rang:
+                                count += 1
+                            else:
+                                count += 0
+
+                    filter_qw = Que_walkin.objects.filter(que_id=i.id,status=1)
+                    for f_qw in filter_qw:
+                        for myq in my_book:
+                            if f_qw.rang < myq.rang:
+                                count += 1
+                            else:
+                                count += 0
                     txt = i.id
                     thisdict[txt] = count
                     count = 0
-    
 
 
     context = {'my_list' : my_list, 'thisdict': thisdict}

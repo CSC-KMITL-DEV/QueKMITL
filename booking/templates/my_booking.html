@@ -47,17 +47,25 @@
               <td><b>เวลา</b></td>
               <td>{{q.que_id.time_start}} ถึง {{q.que_id.time_end}}</td>
             </tr>
-            <tr>
-              <td><b>กรุณามาก่อนเวลานัด</b></td>
-              <td>{{q.que_id.wait_time}} นาที</td>
-            </tr>
+           
      
             {% for key,value in thisdict.items %}
               {% if key == q.que_id.id %}
               
                 <tr>
                 <td><b>จำนวนคิวก่อนหน้า</b></td>
+            
                 <td>{{ value }}</td>
+               
+              </tr>
+
+              <tr>
+                <td><b>เวลารอ</b></td>
+                 {% if value == 0 %}
+                  <td style="color: red;">ถึงคิวของคุณแล้ว</td>
+                {% else %}
+                <td>{{ value|mul:q.que_id.wait_time }} นาที</td>
+                 {%endif%}
               </tr>
 
              

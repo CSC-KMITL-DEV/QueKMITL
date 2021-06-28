@@ -8,29 +8,36 @@
 <div class="container-fluid">
   <div class="row">
     {% for que in que_list %}
-     
+
     <div class="col-sm-4 md-3">
       <div class="list-group">
-        <a id="boxque" class="list-group-item list-group-item-action" href="{% url 'info' id=que.id %}">
-          <div class="row">
-            <div class="col-sm-4 md-3">
-              <br> <br>
+        <div id="boxque" class="list-group-item list-group-item-action">
 
-              <p id="number">{{forloop.counter}}</p>
+
+
+
+          <div class="col-sm md-3">
+            <br> <br>
+
+            <div style="background-color: rgba(45, 45, 45, 0.1); text-align: center; height: 100px; color: orangered;">
+              <br><br>
+              <h4 class="mb-1"><b>{{que.name_que}}</b></h4>
+              <br><br>
             </div>
-            
-             <div class="col-sm-5 md-3">
-              <br> <br>
-              <center><h4 class="mb-1"><b>{{que.name_que}}</b></h4></center>
+            <br>
+            <hr>
+            <br>
+            <div class="d-grid gap-2">
+              <a href="{% url 'info' id=que.id %}" class="btn btn-block btn-lg"
+                style="background-color: orangered;color: white;">รายละเอียด</a>
             </div>
-           </div>
-          <br>
-        </a>
+          </div>
+        </div>
       </div>
     </div>
 
     <br />
-   
+
     {%endfor%}
   </div>
 </div>

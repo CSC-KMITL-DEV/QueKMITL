@@ -327,6 +327,15 @@ def close_que(request, id):
     que = QueInfo.objects.get(pk=id)
     que.status = 0
     que.save()
+    user_book = Que_booking.objects.filter(que_id=id)
+    user_walk = Que_walkin.objects.filter(que_id=id)
+    for booking in user_book:
+        booking.status = 3
+        booking.save()
+    for walk in user_walk:
+        walk.status = 2
+        walk.save()
+
     return redirect('view_que',id=que.type_in_dep_id.id)
 
 @user_passes_test(lambda s: s.is_staff)

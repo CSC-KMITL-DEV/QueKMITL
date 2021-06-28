@@ -29,14 +29,13 @@ function closeShow() {
     <center>
       <br><br><br><br><br><br><br><br><br>
       <div class="col-sm-5 md-3">
-        <table class="table table-light table-bordered " style=" font-size: 16px ;">
+          <table class="table table-light  table-borderless" style=" font-size: 16px ;  width: 100%;height: 100%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 1);">
+
           <thead>
-            <tr>
-              <th>
-              <div onclick="closeShow()" style="align-items: flex-end;">
-                <i class="bi bi-x-square-fill" style="color: red;"></i></div>
-              </th>
-              <th>รายละเอียด</th>
+            <tr> 
+              <th><div onclick="closeShow()" style="align-items: flex-start;">
+                <i class="bi bi-x-square-fill" style="color: red;"></i></div></th>
+              <th colspan="4"><h4>รายละเอียด</h4></th>
             </tr>
           </thead>
           <tbody>
@@ -130,6 +129,8 @@ function closeShow() {
       <div class="boxform">
          {% if using_booking %}
             {% for u in using_booking %}
+            
+
             <div class="list-group-item list-group-item-action" >
               <div class="row">
                 <h2 style="color: blue">{{u.que_id.prefix}}{{u.id}}</h2>
@@ -159,6 +160,8 @@ function closeShow() {
 
             {% if using_walkin %}
             {% for uw in using_walkin %}
+            
+
               <div>
                 <div class="row">
                   <h2 style="color: blue">{{uw.que_id.prefix}}00{{uw.id}}</h2>

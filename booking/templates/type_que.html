@@ -1,14 +1,13 @@
 {% extends "user_base.html" %} {% load static %}{% load socialaccount %} {% block content %}
 <h1>{{dep.name_dep}}</h1>
 <br>
-<div class="container-fluid">
 <div class="row">
     {% for td in t_in_dep %}
 
     <div class="col-sm-4 md-3" style="margin-bottom: 20px;">
       <div class="list-group">
          <div class="container-fluid">
-             <div style="border-radius: 20px;background-color: orangered;border-color: orangered;border-style: solid; margin: 5px;">
+             <div class="glitch-box">
            <br>
                <table class="table table-borderless "  style="background-color: white;">
           <center>
@@ -46,12 +45,6 @@
   
    {%endfor%}
 </div>
-
-
-</div>
-
-
-
 
 
 {% endblock %}

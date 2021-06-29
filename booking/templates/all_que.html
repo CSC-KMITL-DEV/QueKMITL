@@ -10,39 +10,41 @@
    <div class="col-sm-4 md-3" style="margin-bottom: 20px;">
      <div class="list-group">
         <div class="container-fluid">
-            <div style="border-radius: 20px;background-color: orangered;border-color: orangered;border-style: solid; margin: 5px;">
-          <br>
-              <table class="table table-borderless" style="background-color: white;">
-         <center>
-          <tr>
-            <th>
-            </th>
-          </tr>
-          <tr>
-            <th>
-            </th>
-          </tr>
-           <tr>
-             <th>
-              <div class="d-grid gap-2">
-              <a href="{% url 'type_que' id=d.id %}">
-              <h3 class="mb-1"  style="color: orangered; text-align: center;"><b>{{d.name_dep}}</b></h3></a>
-            </div>
-            </th>
-           </tr>
-           <tr>
-            <td>
-            </td>
-          </tr>
-          <tr>
-            <td>
-            </td>
-          </tr>
-         </center>
-        </table>
-      </div>
-
+          <div class="glitch-box">
+            <br>
+            <table class="table table-borderless "  style="background-color: white;">
+       <center>
+        <tr>
+          <th>
+          </th>
+        </tr>
+        <tr>
+          <th>
+          </th>
+        </tr>
+         <tr>
+           <th>
+            <div class="d-grid gap-2">
+            <a href="{% url 'type_que' id=d.id %}">
+              
+            <h3 class="mb-1"  style="color: orangered; text-align: center;"><b>{{d.name_dep}}</b></h3></a>
+          </div>
+          </th>
+         </tr>
+         <tr>
+          <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+        </tr>
+       </center>
+      </table>
+          
+              
        </div>
+      </div>
      </div>
    </div>
    {%endfor%}

@@ -34,7 +34,7 @@
                   {% if value == 0 %}
                    <b style="color: red;">ถึงคิวของคุณแล้ว</b>
                  {% else %}
-                 <b>{{ value|mul:q.que_id.wait_time }} นาที</b>
+                 <b id="time_{{forloop.counter}}" class="time">{{ value|mul:q.que_id.wait_time }} นาที</b>
                   {%endif%}
                {%endif%}
               </p>
@@ -93,6 +93,38 @@
 
 </div>
 </div>
+
+<script>
+
+  function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        timer = 0;
+      }
+    }, 1000);
+  }
+  
+  $(document).ready(function(){
+
+      num_count = $(".time").length;
+      for (let i = 1; i <= num_count; i++) {
+        number = document.getElementById("time_" + i).innerHTML;
+        number = parseInt(number)
+        var Minutes = 60 * number,
+        display = $('#time_'+ i)[0]
+        startTimer(Minutes, display);
+      };
+  });
+</script>
 
 
 

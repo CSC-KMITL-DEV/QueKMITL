@@ -273,3 +273,4 @@ def my_history(request):
 
     return render(request, template_name='my_history.html', context=context)
    
+   

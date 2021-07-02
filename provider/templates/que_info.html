@@ -2,22 +2,20 @@
 
 <script>
 
-function openShow() {
-        document.getElementById("popupShow").style.display = "block";
-        
-      }
-function closeShow() {
-        document.getElementById("popupShow").style.display = "none";
-      }
+  function openShow() {
+    document.getElementById("popupShow").style.display = "block";
+
+  }
+  function closeShow() {
+    document.getElementById("popupShow").style.display = "none";
+  }
 
 
 </script>
-<br/>
-<button
-  class="btn col-sm-2 btn-lg"  id="popup" onclick="openShow()"
-  style="background-color: lightskyblue;border: black;border-style: solid; position: relative; float: right; margin-left: -50%"
->
-<i class="bi bi-journal"></i> รายละเอียดคิว
+<br />
+<button class="btn col-sm-2 btn-lg" id="popup" onclick="openShow()"
+  style="background-color: lightskyblue;border: black;border-style: solid; position: relative; float: right; margin-left: -50%">
+  <i class="bi bi-journal"></i> รายละเอียดคิว
 </button>
 
 <h1>จัดลำดับคิว : {{info.name_que}} ({{info.prefix}})</h1>
@@ -26,309 +24,301 @@ function closeShow() {
 
 
 <div class="popupShow" id="popupShow">
-    <center>
-      <br><br><br><br><br><br><br><br><br>
-      <div class="col-sm-5 md-3">
-          <table class="table table-light  table-borderless" style=" font-size: 16px ;  width: 100%;height: 100%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 1);">
+  <center>
+    <br><br><br><br><br><br><br><br><br>
+    <div class="col-sm-5 md-3">
+      <table class="table table-light  table-borderless"
+        style=" font-size: 16px ;  width: 100%;height: 100%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 1);">
 
-          <thead>
-            <tr> 
-              <th><div onclick="closeShow()" style="align-items: flex-start;">
-                <i class="bi bi-x-square-fill" style="color: red;"></i></div></th>
-              <th colspan="4"><h4>รายละเอียด</h4></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><b>วันที่เปิด</b></td>
-              <td>
-                {%for d in day%}
-                <b>{{d.name_day}} </b>
+        <thead>
+          <tr>
+            <th>
+              <div onclick="closeShow()" style="align-items: flex-start;">
+                <i class="bi bi-x-square-fill" style="color: red;"></i>
+              </div>
+            </th>
+            <th colspan="4">
+              <h4>รายละเอียด</h4>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>วันที่เปิด</b></td>
+            <td>
+              {%for d in day%}
+              <b>{{d.name_day}} </b>
+              {% endfor %}
+            </td>
+          </tr>
+
+          <tr>
+            <td><b>เปิดตั้งแต่วัน</b></td>
+            <td>
+              {{info.date_start}}
+              <b>ถึง </b>
+              {{info.date_end}}
+            </td>
+          </tr>
+          <tr>
+            <td><b>เวลา</b></td>
+            <td>
+              {{info.time_start}}
+              <b>ถึง </b>
+              {{info.time_end}}
+            </td>
+          </tr>
+
+          <tr>
+            <td><b>ระยะเวลารอคิว</b></td>
+            <td><b>{{info.wait_time}} </b>นาที</td>
+          </tr>
+
+          <tr>
+            <td><b>รูปแบบบริการ</b></td>
+
+            <td>
+              {%for q in typeque%}
+              <b>{{q.name_type_que}} </b>
+              {% endfor %}
+            </td>
+          </tr>
+
+          <tr>
+            <td><b>ผู้รับบริการ</b></td>
+
+            <td>
+              {%for u in typeuser%}
+              <b>{{u.name_type_user}} </b>
+              {% endfor %}
+            </td>
+          </tr>
+
+          <tr>
+            <td><b>จัดการคิว</b></td>
+
+
+
+            <td>
+              <div class="d-grid gap-2">
+                {%for qt in typeque%}
+                {% if qt.name_type_que == 'Walk-in'%}
+                <a class="btn btn-lg btn-block " style="background-color: #D5F3FE; border: black;border-style: solid;"
+                  href="{% url 'create_walkin' id=info.id %}">
+                  <i class="bi bi-plus-circle-fill"></i> เพิ่มผู้เข้าคิวใหม่</a>
+                {% endif %}
                 {% endfor %}
-              </td>
-            </tr>
-
-            <tr>
-              <td><b>เปิดตั้งแต่วัน</b></td>
-              <td>
-                {{info.date_start}}
-                <b>ถึง </b>
-                {{info.date_end}}
-              </td>
-            </tr>
-            <tr>
-              <td><b>เวลา</b></td>
-              <td>
-                {{info.time_start}}
-                <b>ถึง </b>
-                {{info.time_end}}
-              </td>
-            </tr>
-
-            <tr>
-              <td><b>ระยะเวลารอคิว</b></td>
-              <td><b>{{info.wait_time}} </b>นาที</td>
-            </tr>
-
-            <tr>
-              <td><b>รูปแบบบริการ</b></td>
-
-              <td>
-                {%for q in typeque%}
-                <b>{{q.name_type_que}} </b>
-                {% endfor %}
-              </td>
-            </tr>
-
-            <tr>
-              <td><b>ผู้รับบริการ</b></td>
-
-              <td>
-                {%for u in typeuser%}
-                <b>{{u.name_type_user}} </b>
-                {% endfor %}
-              </td>
-            </tr>
-
-            <tr>
-              <td><b>จัดการคิว</b></td>
-
-
-
-              <td>
-                <div class="d-grid gap-2">
-                  {%for qt in typeque%}
-                  {% if qt.name_type_que == 'Walk-in'%}
-                  <a class="btn btn-lg btn-block " style="background-color: #D5F3FE; border: black;border-style: solid;"
-                    href="{% url 'create_walkin' id=info.id %}">
-                    <i class="bi bi-plus-circle-fill"></i> เพิ่มผู้เข้าคิวใหม่</a>
-                  {% endif %}
-                  {% endfor %}
-                  <a class="btn btn-lg btn-block"
-                    style="background-color: #0F5298; color: white;border: black;border-style: solid;"
-                    href="{% url 'userbook' id=info.id %}">
-                    <i class="bi bi-info-circle"></i> รายละเอียดผู้เข้าคิว</a>
-                  <a class="btn btn-lg btn-block "
-                    style="background-color: #00008B; color: white;border: black;border-style: solid;"
-                    href="{% url 'close_que' info.id %}"><i class="bi bi-x-square-fill"></i> ปิดบริการ</a>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </center>
+                <a class="btn btn-lg btn-block"
+                  style="background-color: #0F5298; color: white;border: black;border-style: solid;"
+                  href="{% url 'userbook' id=info.id %}">
+                  <i class="bi bi-info-circle"></i> รายละเอียดผู้เข้าคิว</a>
+                <a class="btn btn-lg btn-block "
+                  style="background-color: #00008B; color: white;border: black;border-style: solid;"
+                  href="{% url 'close_que' info.id %}"><i class="bi bi-x-square-fill"></i> ปิดบริการ</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </center>
 </div>
 
-  <br />
+<br />
 
 
-  <div class="col-sm md-3 ">
-    <div class="list-group" style="padding-bottom: 10px;">
-<br>
-      <div class="boxform">
-         {% if using_booking %}
-            {% for u in using_booking %}
-            
+<div class="col-sm md-3 " onload="myFunction()">
+  <div class="list-group" style="padding-bottom: 10px;">
+    <br>
+    <div class="boxform">
+      {% if using_booking %}
+      {% for u in using_booking %}
 
-            <div class="list-group-item list-group-item-action" >
-              <div class="row">
-                <h2 style="color: blue">{{u.que_id.prefix}}{{u.id}}</h2>
-      
-                <h2 style="color: red; text-align: end; padding-right: 50px ">
-                  <b>เข้ารับบริการอยู่</b>
-                </h2>
-                <div class="col-sm">
-                  <h3>คุณ {{u.user_id.first_name}} {{u.user_id.last_name}}</h3>
-                  <h3>เบอร์ติดต่อ : {{u.phone}}</h3>
-                </div>
-              </div>
 
-                <div class="d-grid gap-2 d-md-block">
-                  <a class="btn btn-success col-sm-4 btn-lg btn-block" 
-                    href="{% url 'success' id=u.id%}">
-                    <i class="bi bi-person-check-fill"></i> บริการเสร็จสิ้น
-                  </a>
-                
-                </div>
-                <hr>
-             
-            </div>
-           
-            {%endfor%}
-            {%endif%}
+      <div class="list-group-item list-group-item-action">
+        <div class="row">
+          <h2 style="color: blue">{{u.que_id.prefix}}{{u.id}}</h2>
 
-            {% if using_walkin %}
-            {% for uw in using_walkin %}
-            
-
-              <div>
-                <div class="row">
-                  <h2 style="color: blue">{{uw.que_id.prefix}}00{{uw.id}}</h2>
-                  <h2 style="color: red; text-align: end; padding-right: 50px ">
-                    <b>เข้ารับบริการอยู่</b>
-                  </h2>
-                  <div class="col-sm">
-                    <h3>คุณ {{uw.name}}</h3>
-                    <h3>เบอร์ติดต่อ : {{uw.phone}}</h3>
-                  </div>
-                </div>
-            
-                  <div class="d-grid gap-2 d-md-block">
-                    <a class="btn btn-success col-sm-4 btn-lg btn-block" 
-                    href="{% url 'success_walkin' id=uw.id%}">
-                    <i class="bi bi-person-check-fill"></i> บริการเสร็จสิ้น
-                  </a>
-                    
-                  </div>
-                  <hr>
-               
-              </div>
-            {%endfor%}
-              {%endif%}
-
-    {% for i in list_que %}
-    {% with answer=forloop.counter %}
-      
-      {% for bf in booking_before %}
-      
-
-        {% if i == bf.rang %}
-        <div>
-          <div class="row">
-            <h2 style="color: blue;">{{bf.que_id.prefix}}{{bf.id}}</h2>
-  
-  
-            <h3 style="color: orangered; text-align: end; padding-right: 50px ">
-              <i class="bi bi-stopwatch-fill"></i>
-              <b>รอ <span id="time">{{ answer|mul:info.wait_time }}</span> นาที</b>
-               {% if answer == 1 %}
-              <script>document.getElementById('time').value='{{answer|mul:info.wait_time}}';</script>
-                {%endif%}
-            </h3>
-            <div class="col-sm">
-              <h3>คุณ {{bf.user_id.first_name}} {{bf.user_id.last_name}}</h3>
-              <h3>เบอร์ติดต่อ : {{bf.phone}}</h3>
-            </div>
+          <h2 style="color: red; text-align: end; padding-right: 50px ">
+            <b>เข้ารับบริการอยู่</b>
+          </h2>
+          <div class="col-sm">
+            <h3>คุณ {{u.user_id.first_name}} {{u.user_id.last_name}}</h3>
+            <h3>เบอร์ติดต่อ : {{u.phone}}</h3>
           </div>
-  
-         
-            <div class="d-grid gap-2 d-md-block">
-  
-              
-              <a class="btn col-sm-2 btn-lg btn-block" style="background-color: #146EB4;color: white;"
-                href="{% url 'using' id=bf.id%}">
-                <i class="bi bi-check-square-fill"></i> เข้ารับบริการ
-              </a>
-              
-              <a class="btn btn-warning col-sm-2 btn-lg btn-block" 
-                href="{% url 'putoff' id=bf.id%}">
-                <i class="bi bi-arrow-down-short"></i>
-                เลื่อนคิว </a>
-            
-              <a class="btn btn-danger col-sm-2 btn-lg btn-block"
-                href="{% url 'cancel' id=bf.id%}">
-                <i class="bi bi-x-square-fill"></i>
-                ยกเลิกคิว
-              </a>
-              <a class="btn btn-dark col-sm-2 btn-lg btn-block" 
-                href="{% url 'delete' id=bf.id%}">
-                <i class="bi bi-person-x-fill"></i>
-                ลบคิว
-              </a>
-  
-              </div>
-            <hr>
-          
         </div>
-        {%endif%}
-        {%endfor%}
-       
+
+        <div class="d-grid gap-2 d-md-block">
+          <a class="btn btn-success col-sm-4 btn-lg btn-block" href="{% url 'success' id=u.id%}">
+            <i class="bi bi-person-check-fill"></i> บริการเสร็จสิ้น
+          </a>
+
+        </div>
+        <hr>
+
+      </div>
+
+      {%endfor%}
+      {%endif%}
+
+      {% if using_walkin %}
+      {% for uw in using_walkin %}
+
+
+      <div>
+        <div class="row">
+          <h2 style="color: blue">{{uw.que_id.prefix}}00{{uw.id}}</h2>
+          <h2 style="color: red; text-align: end; padding-right: 50px ">
+            <b>เข้ารับบริการอยู่</b>
+          </h2>
+          <div class="col-sm">
+            <h3>คุณ {{uw.name}}</h3>
+            <h3>เบอร์ติดต่อ : {{uw.phone}}</h3>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-block">
+          <a class="btn btn-success col-sm-4 btn-lg btn-block" href="{% url 'success_walkin' id=uw.id%}">
+            <i class="bi bi-person-check-fill"></i> บริการเสร็จสิ้น
+          </a>
+
+        </div>
+        <hr>
+
+      </div>
+      {%endfor%}
+      {%endif%}
+
+      {% for i in list_que %}
+      {% with answer=forloop.counter %}
+
+      {% for bf in booking_before %}
+
+      {% if i == bf.rang %}
+      <div>
+        <div class="row">
+          <h2 style="color: blue;">{{bf.que_id.prefix}}{{bf.id}}</h2>
+
+
+          <h3 style="color: orangered; text-align: end; padding-right: 50px ">
+            <i class="bi bi-stopwatch-fill"></i>
+            <b><span id="time_{{answer}}" class="time">{{ answer|mul:info.wait_time }}</span> นาที</b>
+
+          </h3>
+          <div class="col-sm">
+            <h3>คุณ {{bf.user_id.first_name}} {{bf.user_id.last_name}}</h3>
+            <h3>เบอร์ติดต่อ : {{bf.phone}}</h3>
+          </div>
+        </div>
+
+
+        <div class="d-grid gap-2 d-md-block">
+
+
+          <a class="btn col-sm-2 btn-lg btn-block" style="background-color: #146EB4;color: white;"
+            href="{% url 'using' id=bf.id%}">
+            <i class="bi bi-check-square-fill"></i> เข้ารับบริการ
+          </a>
+
+          <a class="btn btn-warning col-sm-2 btn-lg btn-block" href="{% url 'putoff' id=bf.id%}">
+            <i class="bi bi-arrow-down-short"></i>
+            เลื่อนคิว </a>
+
+          <a class="btn btn-danger col-sm-2 btn-lg btn-block" href="{% url 'cancel' id=bf.id%}">
+            <i class="bi bi-x-square-fill"></i>
+            ยกเลิกคิว
+          </a>
+          <a class="btn btn-dark col-sm-2 btn-lg btn-block" href="{% url 'delete' id=bf.id%}">
+            <i class="bi bi-person-x-fill"></i>
+            ลบคิว
+          </a>
+
+        </div>
+        <hr>
+
+      </div>
+      {%endif%}
+      {%endfor%}
+
 
 
       {% for w in booking_walkin %}
-          {% if w.rang == i %}
-        <div>
-          <div class="row">
-           
-            <h2 style="color: blue">{{w.que_id.prefix}}00{{w.id}}</h2>
-          
-            
-            <h2 style="color: orangered; text-align: end; padding-right: 50px ">
-              <i class="bi bi-stopwatch-fill"></i>
-             <b>รอ  <span id="time">{{ answer|mul:info.wait_time }}</span> นาที</b>
-              {%if answer == 1 %}
-             <script>document.getElementById('time').value='{{answer|mul:info.wait_time}}';</script>
-              {%endif%}
-            </h2>
-            <div class="col-sm col-lg">
-              <h3>คุณ {{w.name}}</h3>
-              <h3>เบอร์ติดต่อ : {{w.phone}}</h3>
-              <br>
-            </div>
-            
-          </div>
-    
-          
-            <div class="d-grid gap-2 d-md-block">
-             
-              <a class="btn col-sm-2 btn-lg btn-block" style="background-color: #146EB4;color: white;"
-                href="{% url 'using_walkin' id=w.id%}">
-                <i class="bi bi-check-square-fill"></i> เข้ารับบริการ
-              </a>
-    
-              <a class="btn btn-dark col-sm-2 btn-lg btn-block" 
-                href="{% url 'delete_walkin' id=w.id%}">
-                <i class="bi bi-person-x-fill"></i>
-                ลบคิว
-              </a>
-            </div>
-            <hr>
-        
-        </div>
-          {%endif%}
- {%endfor%}
+      {% if w.rang == i %}
+      <div>
+        <div class="row">
 
- {% endwith %}
- {%endfor%}
-</div>
-</div>
+          <h2 style="color: blue">{{w.que_id.prefix}}00{{w.id}}</h2>
+
+
+          <h2 style="color: orangered; text-align: end; padding-right: 50px ">
+            <i class="bi bi-stopwatch-fill"></i>
+            <b><span id="time_{{answer}}" class="time">{{ answer|mul:info.wait_time }}</span> นาที</b>
+
+          </h2>
+          <div class="col-sm col-lg">
+            <h3>คุณ {{w.name}}</h3>
+            <h3>เบอร์ติดต่อ : {{w.phone}}</h3>
+            <br>
+          </div>
+
+        </div>
+
+
+        <div class="d-grid gap-2 d-md-block">
+
+          <a class="btn col-sm-2 btn-lg btn-block" style="background-color: #146EB4;color: white;"
+            href="{% url 'using_walkin' id=w.id%}">
+            <i class="bi bi-check-square-fill"></i> เข้ารับบริการ
+          </a>
+
+          <a class="btn btn-dark col-sm-2 btn-lg btn-block" href="{% url 'delete_walkin' id=w.id%}">
+            <i class="bi bi-person-x-fill"></i>
+            ลบคิว
+          </a>
+        </div>
+        <hr>
+
+      </div>
+      {%endif%}
+      {%endfor%}
+
+      {% endwith %}
+      {%endfor%}
+    </div>
+  </div>
 </div>
 
 <script>
 
-function startTimer(duration, display) {
+  function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     setInterval(function () {
-        minutes = parseInt(timer / 60, 10)
-        seconds = parseInt(timer % 60, 10);
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
+      display.textContent = minutes + ":" + seconds;
 
-        if (--timer < 0) {
-            timer = 0;
-        }
+      if (--timer < 0) {
+        timer = 0;
+      }
     }, 1000);
-    //     if (--timer < 0) {
-    //         timer = duration;
-    //     }
-    // }, 1000);
-}
+  }
+  
+  $(document).ready(function(){
 
-window.onload = async function () {
-    var number = document.getElementById("time").value
-    var number= parseInt(number)
-    console.log(number)
-    var Minutes = 60 * number,
-        display = document.querySelector('#time');
-    startTimer(Minutes, display);
-};
-
-
-
+      num_count = $(".time").length;
+      for (let i = 1; i <= num_count; i++) {
+        console.log(i)
+        number = document.getElementById("time_" + i).innerHTML;
+        number = parseInt(number)
+        var Minutes = 60 * number,
+        display = $('#time_'+ i)[0]
+        startTimer(Minutes, display);
+      };
+  });
 </script>
 
 <br>

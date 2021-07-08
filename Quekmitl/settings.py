@@ -88,10 +88,14 @@ WSGI_APPLICATION = 'Quekmitl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kmitlque',
-        'USER' : 'root',
-        'PASSWORD' : 'maimsrd',
-        'HOST' : 'localhost',
+        # 'NAME': 'kmitlque',
+        # 'USER' : 'root',
+        # 'PASSWORD' : 'maimsrd',
+        # 'HOST' : 'localhost',
+        'NAME': 'xoCgwClta6',
+        'USER' : 'xoCgwClta6',
+        'HOST' : 'remotemysql.com',
+        'PASSWORD' : 'Yt32jt8Pg0',
         'PORT' : '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",

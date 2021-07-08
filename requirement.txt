@@ -3,5 +3,5 @@ Google OAuth API
 bootstrap-sweetalert
 
 social application :
-    Client id:1010018401198-fj05jm4n4738g7mqutp4qcd8qkts4u3c.apps.googleusercontent.com
-    Secret key:NwwLHr6mFhsl_kU7n3YKoQg3
+    Client id: "1010018401198-fj05jm4n4738g7mqutp4qcd8qkts4u3c.apps.googleusercontent.com"
+    Secret key: "NwwLHr6mFhsl_kU7n3YKoQg3"

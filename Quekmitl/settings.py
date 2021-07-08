@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'mathfilters',
 
 ]
-SITE_ID = 5
+SITE_ID = 6
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

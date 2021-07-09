@@ -1,6 +1,4 @@
 django-allauth
-Google OAuth API
-mathfilters
 bootstrap-sweetalert
 pymysql
 django-mathfilters

@@ -16,5 +16,6 @@ python -m pip install แล้วตามด้วย <br>
 
 ## ข้อมูลที่ต้องใส่ใน TABLE เมื่อทำการสร้าง DATABASE
 1. week_day <br>
+<img src="https://www.img.in.th/images/80d7c96684f9c852180fa81971c6ae7b.png" alt="80d7c96684f9c852180fa81971c6ae7b.png" border="0" /> <br>
 2. type_user <br>
 3. type_que <br>

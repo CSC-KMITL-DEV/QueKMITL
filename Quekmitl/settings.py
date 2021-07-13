@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'mathfilters',
 
 ]
-SITE_ID = 6
+SITE_ID = 5
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,10 +88,14 @@ WSGI_APPLICATION = 'Quekmitl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'xoCgwClta6',
-        'USER' : 'xoCgwClta6',
-        'HOST' : 'remotemysql.com',
-        'PASSWORD' : 'Yt32jt8Pg0',
+        # 'NAME': 'xoCgwClta6',
+        # 'USER' : 'xoCgwClta6',
+        # 'HOST' : 'remotemysql.com',
+        # 'PASSWORD' : 'Yt32jt8Pg0',
+        'NAME': 'kmitlque',
+        'USER' : 'root',
+        'PASSWORD' : 'maimsrd',
+        'HOST' : 'localhost',
         'PORT' : '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",

@@ -1,4 +1,4 @@
-django-allauth
-bootstrap-sweetalert
-pymysql
-django-mathfilters
+- django-allauth
+- bootstrap-sweetalert
+- pymysql
+- django-mathfilters

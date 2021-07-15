@@ -85,23 +85,34 @@ WSGI_APPLICATION = 'Quekmitl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'xoCgwClta6',
-        # 'USER' : 'xoCgwClta6',
-        # 'HOST' : 'remotemysql.com',
-        # 'PASSWORD' : 'Yt32jt8Pg0',
-        'NAME': 'kmitlque',
-        'USER' : 'root',
-        'PASSWORD' : 'maimsrd',
-        'HOST' : 'localhost',
-        'PORT' : '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mysql',
+            'USER' : 'root',
+            'HOST' : '127.0.0.1',
+            'PASSWORD' : 'Yt32jt8Pg0',
+            'PORT' : '3306',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+        }
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'xoCgwClta6',
+            'USER' : 'xoCgwClta6',
+            'HOST' : 'remotemysql.com',
+            'PASSWORD' : 'Yt32jt8Pg0',
+            'PORT' : '3306',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+        }
     }
-}
 
 
 # Password validation

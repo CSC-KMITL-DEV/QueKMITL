@@ -6,13 +6,6 @@
 4. python manage.py migrate <br>
 5. python manage.py runserver <br>
 
-## สื่งที่ต้องติดตั้งเพิ่มเติม
-python -m pip install แล้วตามด้วย <br>
-
-1. django-allauth <br>
-2. bootstrap-sweetalert <br>
-3. pymysql <br>
-4. django-mathfilters <br>
 
 ## ข้อมูลที่ต้องใส่ใน TABLE เมื่อทำการสร้าง DATABASE
 1. week_day <br>

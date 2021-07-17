@@ -41,12 +41,12 @@ jobs:
         python manage.py test
 
     - name: Copying files to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
-          rm: true
-          source: "/home/runner/work/QueKMITL/QueKMITL/"
-          target: "${{ secrets.REMOTE_DIR }}"
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        rm: true
+        source: "/home/runner/work/QueKMITL/QueKMITL/"
+        target: "${{ secrets.REMOTE_DIR }}"

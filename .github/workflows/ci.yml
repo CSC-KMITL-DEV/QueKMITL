@@ -34,8 +34,6 @@ jobs:
         pip install -r requirement.txt
     - name: Run Migrations # run migrations to create table in side car db container
       run: python manage.py migrate
-    - name: Check Directory
-      run: pwd
     - name: Run Tests
       run: |
         python manage.py test
@@ -48,5 +46,21 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         rm: true
-        source: "/home/runner/work/QueKMITL/QueKMITL/"
+        source: "/home/runner/work/QueKMITL/QueKMITL/github/workspace"
         target: "${{ secrets.REMOTE_DIR }}"
+
+    - name: Run server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
+        script: |
+          mv ~/app/github/workspace ~/quekmitl
+          cd ~/quekmitl
+          virtualenv --python=3.9 venv
+          source venv/bin/activate
+          pip install -r requirement.txt
+          python manage.py makemigrations
+          python manage.py migrate

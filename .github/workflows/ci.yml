@@ -46,7 +46,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         rm: true
-        source: "/home/runner/work/QueKMITL/QueKMITL/"
+        source: "/home/runner/work/QueKMITL/QueKMITL/J"
         target: "${{ secrets.REMOTE_DIR }}"
 
     - name: Run server
@@ -57,6 +57,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         script: |
+          bash
           mv ~/app/github/workspace ~/quekmitl
           cd ~/quekmitl
           virtualenv --python=3.9 venv

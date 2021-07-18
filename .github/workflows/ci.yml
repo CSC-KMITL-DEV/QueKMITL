@@ -57,11 +57,12 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         script: |
-          bash
-          mv ~/app/github/workspace ~/quekmitl
-          cd ~/quekmitl
+          mv ~/app/github/workspace/* ~/app
+          cd ~/app
           virtualenv --python=3.9 venv
-          source venv/bin/activate
+          . venv/bin/activate
           pip install -r requirement.txt
           python manage.py makemigrations
           python manage.py migrate
+          pip install gunicorn
+          pip install uwsgi

@@ -66,4 +66,4 @@ jobs:
           python manage.py migrate
           pip install gunicorn
           pip install uwsgi
-          sudo systemctl restart gunicorn
+          echo ${{ secrets.SSH_KEY_PASSPHRASE }} | sudo  systemctl status gunicorn

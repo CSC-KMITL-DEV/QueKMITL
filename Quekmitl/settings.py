@@ -144,14 +144,11 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    #'/var/django/venv/lib/python3.8/site-packages/django/contrib/admin/static/admin',
     'app/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin',
 ]
 
-#
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#
 
 
 # Default primary key field type

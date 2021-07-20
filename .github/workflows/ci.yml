@@ -62,8 +62,7 @@ jobs:
           virtualenv --python=3.9 venv
           . venv/bin/activate
           pip install -r requirement.txt
-          python manage.py makemigrations
-          python manage.py migrate
+          python manage.py collectstatic --noinput
           pip install gunicorn
           pip install uwsgi
           echo ${{ secrets.SSH_KEY_PASSPHRASE }} | sudo -S systemctl restart gunicorn

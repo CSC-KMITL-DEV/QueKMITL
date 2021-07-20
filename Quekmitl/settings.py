@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'mathfilters',
 
 ]
-SITE_ID = 5
+SITE_ID = 6
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -146,11 +146,11 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    'app/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin',
+    '/home/dev1/app/venv/lib/python3.9/site-packages/django/contrib/admin/static/admin',
 ]
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
 # Default primary key field type

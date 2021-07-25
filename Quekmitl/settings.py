@@ -90,10 +90,6 @@ WSGI_APPLICATION = 'Quekmitl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'xoCgwClta6',
-        # 'USER' : 'xoCgwClta6',
-        # 'HOST' : 'remotemysql.com',
-        # 'PASSWORD' : 'Yt32jt8Pg0',
         'NAME': 'kmitlque',
         'USER' : 'root',
         'PASSWORD' : 'maimsrd',

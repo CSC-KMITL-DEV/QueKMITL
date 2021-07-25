@@ -73,7 +73,7 @@ def index_page(request):
                         user_type = TypeUser.objects.get(id=2)
                     )
                     create.save()
-                elif username.isalpha() and (domain_name == kmitl):
+                elif (username.isnumeric() == False) and (domain_name == kmitl):
                     create = User_in_type.objects.create(
                         user = user,
                         user_type = TypeUser.objects.get(id=1)

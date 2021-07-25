@@ -24,10 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o4*%o&^qk5o8u&1)__^czvv6h^0_ued4mkge@-6%cik2quuf8@'
+# SECRET_KEY = 'django-insecure-o4*%o&^qk5o8u&1)__^czvv6h^0_ued4mkge@-6%cik2quuf8@'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-o4*%o&^qk5o8u&1)__^czvv6h^0_ued4mkge@-6%cik2quuf8@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['*']
 
@@ -87,19 +89,34 @@ WSGI_APPLICATION = 'Quekmitl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kmitlque',
-        'USER' : 'root',
-        'PASSWORD' : 'maimsrd',
-        'HOST' : 'localhost',
-        'PORT' : '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+if os.getenv('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mysql',
+            'USER' : 'root',
+            'HOST' : '127.0.0.1',
+            'PASSWORD' : 'Yt32jt8Pg0',
+            'PORT' : '3306',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+        }
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('dbname'),
+            'USER' : os.getenv('dbuser'),
+            'HOST' : os.getenv('dbhost'),
+            'PASSWORD' : os.getenv('dbpass'),
+            'PORT' : os.getenv('dbport'),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        }
+        }
     }
-}
 
 
 # Password validation

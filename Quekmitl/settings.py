@@ -31,12 +31,21 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-o4*%o&^qk5o8u&
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = ['queue.kmitl.ac.th']
 
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    
+    'provider',
+    'user',
+    'booking',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,14 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'provider',
-    'user',
-    'booking',
-    'allauth', # New
-    'allauth.account', # New
-    'allauth.socialaccount', # New 
-    'allauth.socialaccount.providers.google', # New
-    'mathfilters',
 
 ]
 SITE_ID = 6
@@ -117,7 +118,6 @@ else:
         }
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

@@ -54,11 +54,13 @@ def create_dep(request):
 def type_in_dep(request, id):
     dep = Department.objects.get(pk=id)
     t_in_dep = Type_in_Dep.objects.filter(dep_id=dep.id)
+    
     context = {
-        't_in_dep' : t_in_dep,
-        'dep' : dep,
-    }
-    return render(request, template_name='type_in_dep.html', context=context)
+            't_in_dep' : t_in_dep,
+            'dep' : dep,
+        }
+    return render(request, template_name='type_in_Dep.html', context=context)
+
 
 @user_passes_test(lambda s: s.is_staff)
 @login_required

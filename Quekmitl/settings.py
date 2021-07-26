@@ -37,7 +37,15 @@ ALLOWED_HOSTS = ['queue.kmitl.ac.th']
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    
+    'provider',# New
+    'user',# New
+    'booking',# New
+    'allauth', # New
+    'allauth.account', # New
+    'allauth.socialaccount', # New 
+    'allauth.socialaccount.providers.google', # New
+    'mathfilters',  # New
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,14 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'provider',
-    'user',
-    'booking',
-    'allauth', # New
-    'allauth.account', # New
-    'allauth.socialaccount', # New 
-    'allauth.socialaccount.providers.google', # New
-    'mathfilters',
 
 ]
 SITE_ID = 6
@@ -68,11 +68,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Quekmitl.urls'
 
+
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
         # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(SETTINGS_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

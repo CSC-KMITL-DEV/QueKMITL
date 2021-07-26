@@ -38,14 +38,14 @@ ALLOWED_HOSTS = ['queue.kmitl.ac.th']
 # Application definition
 
 INSTALLED_APPS = [    
-    'provider',# New
-    'user',# New
-    'booking',# New
-    'allauth', # New
-    'allauth.account', # New
-    'allauth.socialaccount', # New 
-    'allauth.socialaccount.providers.google', # New
-    'mathfilters',  # New
+    'provider',
+    'user',
+    'booking',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'mathfilters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
